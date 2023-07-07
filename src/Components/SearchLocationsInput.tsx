@@ -8,9 +8,11 @@ import {
 } from 'react-native';
 
 import React, {useEffect, useRef, useState} from 'react';
+import {useDispatch} from 'react-redux';
 import {Config} from '../../config';
-import {Colors, Metrics} from '../theme';
 import {searchLocationCities} from '../util/location';
+import {setSelectedCity} from '../redux/features/location';
+import {Colors, Metrics} from '../theme';
 import {ICity} from '../ts/interfaces';
 
 type SearchLocationsInputProps = {
@@ -20,6 +22,7 @@ type SearchLocationsInputProps = {
 const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
   onSearchResultsVisibility,
 }) => {
+  const dispatch = useDispatch();
   const inputRef = useRef<TextInput>(null);
   const [citiesList, setCitiesList] = useState<ICity[]>([]);
   const [isSearchLoading, setIsSearchLoading] = useState<boolean>(false);
@@ -71,7 +74,6 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
   /**
    * Selects a city from the list of cities
    * @param {ICity} city - The city to select
-   * TODO: Add the city to the store
    */
   const onSelectCity = (city: ICity): void => {
     onSearchResultsVisibility(false);
@@ -82,7 +84,7 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
       inputRef.current.blur();
     }
 
-    // set the city as the current location in the store
+    dispatch(setSelectedCity(city)); // Set current city in state
   };
 
   return (
