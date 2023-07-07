@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 
 // Components
 import ForecastToggle from './ForecastToggle';
+import SearchLocationsInput from './SearchLocationsInput';
 
 type ForecastToggleOverlayProps = {
   currentRoute: string;
@@ -18,6 +19,9 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
         styles.overlay,
         {backgroundColor: !showForecastToggle ? '#00000070' : undefined},
       ]}>
+      <SearchLocationsInput
+        onSearchResultsVisibility={visible => setShowForecastToggle(!visible)}
+      />
       {showForecastToggle && <ForecastToggle currentRoute={currentRoute} />}
     </View>
   );
