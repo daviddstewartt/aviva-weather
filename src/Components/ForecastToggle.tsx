@@ -4,55 +4,41 @@ import {useNavigation} from '@react-navigation/native';
 
 import {Colors, Metrics} from '../theme';
 
-type ForecastToggleOverlayProps = {
+type ForecastToggleProps = {
   currentRoute: string;
 };
 
-const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
-  currentRoute,
-}) => {
+const ForecastToggle: React.FC<ForecastToggleProps> = ({currentRoute}) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.overlay}>
-      <View style={styles.forecastToggleContainer}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Home')}
-          style={[
-            styles.toggleItem,
-            currentRoute === 'Home' && styles.toggleItemActive,
-          ]}>
-          <Text>Today</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('Forecast')}
-          style={[
-            styles.toggleItem,
-            currentRoute === 'Forecast' && styles.toggleItemActive,
-          ]}>
-          <Text>Forecast</Text>
-        </TouchableOpacity>
-      </View>
+    <View style={styles.forecastToggleContainer}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Home')}
+        style={[
+          styles.toggleItem,
+          currentRoute === 'Home' && styles.toggleItemActive,
+        ]}>
+        <Text>Today</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('Forecast')}
+        style={[
+          styles.toggleItem,
+          currentRoute === 'Forecast' && styles.toggleItemActive,
+        ]}>
+        <Text>Forecast</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-ForecastToggleOverlay.defaultProps = {
+ForecastToggle.defaultProps = {
   currentRoute: 'Home',
 };
 
-export default ForecastToggleOverlay;
+export default ForecastToggle;
 
 const styles = StyleSheet.create({
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-  },
   forecastToggleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
