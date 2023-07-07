@@ -95,6 +95,7 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
           style={styles.input}
           onBlur={() => {
             onSearchResultsVisibility(false);
+            setShowCitiesList(false);
           }}
           onFocus={() => onSearchResultsVisibility(true)}
           onChangeText={setSearchLocationString}
@@ -105,6 +106,7 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
           <TouchableOpacity
             onPress={() => {
               setSearchLocationString('');
+              setShowCitiesList(false);
               onSearchResultsVisibility(false);
             }}>
             <Text>Clear</Text>
