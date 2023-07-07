@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Config} from '../../config';
 import {Colors, Metrics} from '../theme';
 import {searchLocationCities} from '../util/location';
@@ -20,6 +20,7 @@ type SearchLocationsInputProps = {
 const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
   onSearchResultsVisibility,
 }) => {
+  const inputRef = useRef<TextInput>(null);
   const [citiesList, setCitiesList] = useState<ICity[]>([]);
   const [isSearchLoading, setIsSearchLoading] = useState<boolean>(false);
   const [showCitiesList, setShowCitiesList] = useState<boolean>(false);
@@ -77,14 +78,18 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
     setShowCitiesList(false);
     setSearchLocationString('');
     // unfocus the input
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
 
     // set the city as the current location in the store
   };
 
   return (
-    <View>
+    <View style={styles.searchContainer}>
       <View style={styles.inputContainer}>
         <TextInput
+          ref={inputRef}
           placeholder="Search for a city"
           value={searchLocationString}
           style={styles.input}
@@ -150,6 +155,11 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
 export default SearchLocationsInput;
 
 const styles = StyleSheet.create({
+  searchContainer: {
+    width: '100%',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   inputContainer: {
     backgroundColor: Colors.AVIVA_YELLOW,
     width: '90%',
