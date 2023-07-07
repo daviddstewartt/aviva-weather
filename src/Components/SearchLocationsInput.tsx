@@ -24,6 +24,7 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
   const [isSearchLoading, setIsSearchLoading] = useState<boolean>(false);
   const [showCitiesList, setShowCitiesList] = useState<boolean>(false);
   const [searchLocationString, setSearchLocationString] = useState<string>('');
+  const [searchError, setSearchError] = useState<string | null>(null);
 
   // Debounce the search string
   useEffect(() => {
@@ -55,9 +56,11 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
       setCitiesList(cities);
       setShowCitiesList(true);
       setIsSearchLoading(false);
+      setSearchError(null);
       onSearchResultsVisibility(true);
     } catch (error) {
       console.log('Error:', error.message);
+      setSearchError(error.message);
       setShowCitiesList(false);
       setIsSearchLoading(false);
       onSearchResultsVisibility(true);
@@ -104,7 +107,7 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
         ) : null}
       </View>
 
-      {showCitiesList && (
+      {!searchError && showCitiesList && (
         <View style={styles.searchResultsContainer}>
           {citiesList.length >= 1 &&
             citiesList.map((city: ICity, index: number) => (
@@ -132,6 +135,12 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
               </Text>
             </View>
           )}
+        </View>
+      )}
+
+      {searchError && (
+        <View style={{alignItems: 'center', marginTop: Metrics.spacing.s}}>
+          <Text style={styles.searchResultItemText}>{searchError}</Text>
         </View>
       )}
     </View>
