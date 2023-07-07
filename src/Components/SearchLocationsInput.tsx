@@ -1,5 +1,12 @@
-import {StyleSheet, TextInput, View} from 'react-native';
-import React, {useState} from 'react';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {Colors, Metrics} from '../theme';
 
 type SearchLocationsInputProps = {
@@ -10,6 +17,22 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
   onSearchResultsVisibility,
 }) => {
   const [searchLocationString, setSearchLocationString] = useState<string>('');
+  const [isSearchLoading, setIsSearchLoading] = useState<boolean>(false);
+
+  // Debounce the search string
+  useEffect(() => {
+    if (searchLocationString.length < 3) {
+      return;
+    }
+    setIsSearchLoading(true);
+    const searchTimeoutId = setTimeout(() => {
+      // Call the API
+    }, 2000);
+
+    return () => {
+      clearTimeout(searchTimeoutId);
+    };
+  }, [searchLocationString]);
 
   return (
     <View>
@@ -24,6 +47,17 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
           onFocus={() => onSearchResultsVisibility(true)}
           onChangeText={setSearchLocationString}
         />
+        {isSearchLoading ? (
+          <ActivityIndicator color={Colors.AVIVA_BLUE} />
+        ) : searchLocationString.length >= 1 ? (
+          <TouchableOpacity
+            onPress={() => {
+              setSearchLocationString('');
+              onSearchResultsVisibility(false);
+            }}>
+            <Text>Clear</Text>
+          </TouchableOpacity>
+        ) : null}
       </View>
     </View>
   );
