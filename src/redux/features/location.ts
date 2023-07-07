@@ -10,6 +10,21 @@ const locationSlice = createSlice({
     setSelectedCity: (state, action: PayloadAction<ICity>) => {
       state.selectedCity = action.payload;
     },
+    addCityToSaved: (state, action: PayloadAction<ICity>) => {
+      state.savedCities.push(action.payload);
+    },
+    removeCityFromSaved: (state, action: PayloadAction<string>) => {
+      state.savedCities = state.savedCities.filter(
+        city => city.id !== action.payload,
+      );
+
+      if (state.selectedCity?.id === action.payload) {
+        /** @todo selected city should be set to the users current */
+        state.selectedCity = null;
+      }
+
+      return state;
+    },
   },
 });
 
