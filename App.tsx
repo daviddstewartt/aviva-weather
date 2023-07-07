@@ -7,7 +7,7 @@ import HomeScreen from './src/Screens/HomeScreen';
 import ForecastScreen from './src/Screens/ForecastScreen';
 
 // Components
-import ForecastToggleOverlay from './src/Components/ForecastToggleOverlay';
+import NavigationOverlay from './src/Components/NavigationOverlay';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
 const Stack = createStackNavigator();
@@ -28,7 +28,7 @@ const App = () => {
           <Stack.Screen name="Home" component={HomeScreen} />
           <Stack.Screen name="Forecast" component={ForecastScreen} />
         </Stack.Navigator>
-        <ForecastToggleOverlay currentRoute={currentRouteName || 'Home'} />
+        <NavigationOverlay currentRoute={currentRouteName || 'Home'} />
       </NavigationContainer>
     </GestureHandlerRootView>
   );
