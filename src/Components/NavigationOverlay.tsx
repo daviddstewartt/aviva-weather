@@ -2,7 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 
 // Components
-import ForecastToggleOverlay from './ForecastToggleOverlay';
+import ForecastToggle from './ForecastToggle';
 
 type ForecastToggleOverlayProps = {
   currentRoute: string;
@@ -18,9 +18,7 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
         styles.overlay,
         {backgroundColor: !showForecastToggle ? '#00000070' : undefined},
       ]}>
-      {showForecastToggle && (
-        <ForecastToggleOverlay currentRoute={currentRoute} />
-      )}
+      {showForecastToggle && <ForecastToggle currentRoute={currentRoute} />}
     </View>
   );
 };
