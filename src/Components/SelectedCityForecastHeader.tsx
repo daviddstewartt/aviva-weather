@@ -30,7 +30,7 @@ const SelectedCityForecastHeader: React.FC<
             }}
           />
           <Text style={styles.currentTemp}>
-            {selectedCity?.weather.main.temp}°C
+            {selectedCity?.weather.main.temp || '-'}°C
           </Text>
         </View>
 
@@ -40,10 +40,10 @@ const SelectedCityForecastHeader: React.FC<
             numberOfLines={2}
             ellipsizeMode={'tail'}
             style={styles.locationTitle}>
-            {selectedCity?.name}
+            {selectedCity?.name || '---'}
           </Text>
           <Text style={styles.weatherDesc}>
-            {selectedCity?.weather.weather[0].description}
+            {selectedCity?.weather.weather[0].description || '---'}
           </Text>
           <View style={styles.minMaxTempContainer}>
             <FontAwesome5 name={'temperature-high'} size={16} color={'white'} />
