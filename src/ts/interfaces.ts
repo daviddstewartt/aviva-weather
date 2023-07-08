@@ -1,3 +1,5 @@
+import {GeolocationResponse} from '@react-native-community/geolocation';
+
 /**
  * Cities formatted from response from OpenWeatherMap API
  */
@@ -12,3 +14,5 @@ export interface ICity {
     [key: string]: string;
   };
 }
+
+export type LocationCoords = Pick<GeolocationResponse, 'coords'>;
