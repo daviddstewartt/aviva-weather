@@ -62,6 +62,12 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
         location,
         Config.OPEN_WEATHER_MAP_API_KEY,
       );
+
+      // give each city an id
+      cities.forEach(city => {
+        city.id = city.name + city.country + city.lat + city.lon;
+      });
+
       setCitiesList(cities);
       setShowCitiesList(true);
       setIsSearchLoading(false);

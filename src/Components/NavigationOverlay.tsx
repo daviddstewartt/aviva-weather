@@ -1,15 +1,13 @@
-import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {Fragment, useState} from 'react';
-
-// Styles
-import {Metrics} from '../theme';
-import LinearGradient from 'react-native-linear-gradient';
 
 // Components
 import ForecastToggle from './ForecastToggle';
 import SearchLocationsInput from './SearchLocationsInput';
 import SavedLocations from './SavedLocations';
 import SelectedCityForecastHeader from './SelectedCityForecastHeader';
+import BottomNavigationBar from './BottomNavigationBar';
+import LinearGradient from 'react-native-linear-gradient';
 
 type ForecastToggleOverlayProps = {
   currentRoute: string;
@@ -66,25 +64,12 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
       </View>
 
       {/* Save Locations Overlay Toggle */}
-      {showForecastToggle && (
-        <View style={styles.bottomNavContainer}>
-          {/* This button will change to current location */}
-          <TouchableOpacity onPress={() => {}}>
-            <View>
-              {/* Change to icon */}
-              <Text style={{color: 'black'}}>Current Location</Text>
-            </View>
-          </TouchableOpacity>
-
-          {/* This button shows saved cities */}
-          <TouchableOpacity
-            onPress={() => setShowSavedLocations(!showSavedLocations)}>
-            <View>
-              {/* Change to icon */}
-              <Text style={{color: 'black'}}>Saved Locations</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+      {showForecastToggle && !showSavedLocations && (
+        <BottomNavigationBar
+          onShowSavedLocations={() =>
+            setShowSavedLocations(!showSavedLocations)
+          }
+        />
       )}
     </View>
   );
@@ -120,12 +105,5 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     justifyContent: 'space-between',
-  },
-  bottomNavContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'orange',
-    paddingVertical: Metrics.spacing.l,
   },
 });

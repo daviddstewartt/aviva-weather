@@ -26,11 +26,6 @@ const locationSlice = createSlice({
         city => city.id !== action.payload,
       );
 
-      if (state.selectedCity?.id === action.payload) {
-        /** @todo selected city should be set to the users current */
-        state.selectedCity = null;
-      }
-
       return state;
     },
   },
