@@ -18,7 +18,9 @@ const ForecastToggle: React.FC<ForecastToggleProps> = ({currentRoute}) => {
           styles.toggleItem,
           currentRoute === 'Home' && styles.toggleItemActive,
         ]}>
-        <Text>Today</Text>
+        <Text style={[currentRoute === 'Home' && styles.activeText]}>
+          Today
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigation.navigate('Forecast')}
@@ -26,7 +28,9 @@ const ForecastToggle: React.FC<ForecastToggleProps> = ({currentRoute}) => {
           styles.toggleItem,
           currentRoute === 'Forecast' && styles.toggleItemActive,
         ]}>
-        <Text>Forecast</Text>
+        <Text style={[currentRoute === 'Forecast' && styles.activeText]}>
+          Forecast
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -67,5 +71,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 2,
+  },
+  activeText: {
+    color: Colors.AVIVA_YELLOW,
+    fontWeight: 'bold',
   },
 });

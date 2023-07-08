@@ -4,6 +4,9 @@ import {Colors, Fonts, Metrics} from '../theme';
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
 
+// Styles & Icons
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
 type SelectedCityForecastHeaderProps = {};
 
 const SelectedCityForecastHeader: React.FC<
@@ -42,9 +45,16 @@ const SelectedCityForecastHeader: React.FC<
           <Text style={styles.weatherDesc}>
             {selectedCity?.weather.weather[0].description}
           </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <Text>{selectedCity?.weather.main.temp_min}°C</Text>
-            <Text>/{selectedCity?.weather.main.temp_max}°C</Text>
+          <View style={styles.minMaxTempContainer}>
+            <FontAwesome5 name={'temperature-high'} size={16} color={'white'} />
+            <Text
+              style={{
+                color: Colors.AVIVA_YELLOW,
+                marginLeft: Metrics.spacing.m,
+              }}>
+              {selectedCity?.weather.main.temp_min}°C /{' '}
+              {selectedCity?.weather.main.temp_max}°C
+            </Text>
           </View>
         </View>
       </View>
@@ -65,10 +75,11 @@ const styles = StyleSheet.create({
   },
   locationTitle: {
     fontSize: Fonts.size.l,
-    color: Colors.TEXT,
+    color: Colors.TEXT_LIGHT,
   },
   weatherDesc: {
-    color: Colors.TEXT,
+    color: Colors.TEXT_LIGHT,
+    marginBottom: Metrics.spacing.s,
   },
   currentWeatherContainer: {
     flexDirection: 'column',
@@ -77,6 +88,16 @@ const styles = StyleSheet.create({
   },
   currentTemp: {
     fontSize: Fonts.size.m,
-    color: Colors.TEXT,
+    color: Colors.TEXT_LIGHT,
+  },
+  minMaxTempContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    justifyContent: 'flex-start',
+    backgroundColor: Colors.AVIVA_BLUE,
+    paddingVertical: Metrics.spacing.s,
+    paddingHorizontal: Metrics.spacing.m,
+    borderRadius: Metrics.radius.circle,
   },
 });

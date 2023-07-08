@@ -3,6 +3,7 @@ import React, {Fragment, useState} from 'react';
 
 // Styles
 import {Metrics} from '../theme';
+import LinearGradient from 'react-native-linear-gradient';
 
 // Components
 import ForecastToggle from './ForecastToggle';
@@ -29,6 +30,12 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
             !showForecastToggle || showSavedLocations ? '#00000080' : undefined,
         },
       ]}>
+      <LinearGradient
+        pointerEvents="none"
+        colors={['#00000080', '#00000080', 'transparent']}
+        style={styles.gradient}
+      />
+
       {showForecastToggle && !showSavedLocations && (
         <SelectedCityForecastHeader />
       )}
@@ -98,6 +105,17 @@ const styles = StyleSheet.create({
     bottom: 0,
     width: '100%',
     height: '100%',
+    alignItems: 'center',
+    flexDirection: 'column',
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  gradient: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: 320,
     alignItems: 'center',
     flexDirection: 'column',
     flex: 1,
