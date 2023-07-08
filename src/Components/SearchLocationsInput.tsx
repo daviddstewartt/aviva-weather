@@ -109,7 +109,7 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
         />
         {isSearchLoading ? (
           <ActivityIndicator color={Colors.AVIVA_BLUE} />
-        ) : searchLocationString.length >= 1 ? (
+        ) : inputRef.current?.isFocused() ? (
           <TouchableOpacity
             style={{alignSelf: 'center', marginRight: Metrics.spacing.xs}}
             onPress={() => {
