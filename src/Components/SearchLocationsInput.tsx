@@ -11,10 +11,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {Config} from '../../config';
 import {searchLocationCities} from '../util/location';
-import {
-  requestSelectedCityWeather,
-  setSelectedCity,
-} from '../redux/features/location';
+import {requestSelectedCityWeather} from '../redux/features/location';
 import {Colors, Metrics} from '../theme';
 import {ICity} from '../ts/interfaces';
 
@@ -58,8 +55,6 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
         location,
         Config.OPEN_WEATHER_MAP_API_KEY,
       );
-
-      console.log('Response:', cities);
       setCitiesList(cities);
       setShowCitiesList(true);
       setIsSearchLoading(false);
