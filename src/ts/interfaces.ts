@@ -25,6 +25,7 @@ export interface ICity {
  */
 export interface ICityWithWeather extends ICity {
   weather: Omit<IWeather, 'coord' | 'name'>;
+  timestamp: number;
 }
 
 export type LocationCoords = Pick<GeolocationResponse, 'coords'>;

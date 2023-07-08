@@ -24,6 +24,7 @@ function* fetchCityWeatherData(action: PayloadAction<ICity>) {
     const newCityWeather: ICityWithWeather = {
       ...action.payload,
       weather: cityWeather,
+      timestamp: Date.now(), // adding timestamp to know when the data was fetched
     };
 
     yield put({type: setSelectedCity.type, payload: newCityWeather});
