@@ -7,6 +7,9 @@ const locationSlice = createSlice({
   name: 'location',
   initialState,
   reducers: {
+    setLocationsPermissionsGranted: (state, action: PayloadAction<boolean>) => {
+      state.permissionsGranted = action.payload;
+    },
     setSelectedCity: (state, action: PayloadAction<ICity>) => {
       state.selectedCity = action.payload;
     },
@@ -28,5 +31,11 @@ const locationSlice = createSlice({
   },
 });
 
-export const {setSelectedCity} = locationSlice.actions;
+export const {
+  setLocationsPermissionsGranted,
+  setSelectedCity,
+  addCityToSaved,
+  removeCityFromSaved,
+} = locationSlice.actions;
+
 export default locationSlice.reducer;
