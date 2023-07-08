@@ -14,7 +14,7 @@ const locationSlice = createSlice({
     setUsersCurrentLocation: (state, action: PayloadAction<LocationCoords>) => {
       state.currentLocation = action.payload;
     },
-    requestSelectedCityWeather: () => {}, // Action only for saga side effects
+    requestSelectedCityWeather: (state, action: PayloadAction<ICity>) => {}, // Action only for saga side effects
     setSelectedCity: (state, action: PayloadAction<ICityWithWeather>) => {
       state.selectedCity = action.payload;
     },
