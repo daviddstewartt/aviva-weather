@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
 
@@ -12,6 +13,7 @@ import ForecastScreen from './src/Screens/ForecastScreen';
 // Components
 import NavigationOverlay from './src/Components/NavigationOverlay';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import LocationPermissionsWrapper from './src/Components/LocationPermissionsWrapper';
 
 const Stack = createStackNavigator();
 
@@ -23,18 +25,20 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <GestureHandlerRootView style={{flex: 1}}>
-        <NavigationContainer
-          onStateChange={state =>
-            setCurrentRouteName(state?.index === 0 ? 'Home' : 'Forecast')
-          }>
-          <Stack.Navigator screenOptions={defaultScreenOptions}>
-            <Stack.Screen name="Home" component={HomeScreen} />
-            <Stack.Screen name="Forecast" component={ForecastScreen} />
-          </Stack.Navigator>
-          <NavigationOverlay currentRoute={currentRouteName || 'Home'} />
-        </NavigationContainer>
-      </GestureHandlerRootView>
+      <LocationPermissionsWrapper>
+        <GestureHandlerRootView style={{flex: 1}}>
+          <NavigationContainer
+            onStateChange={state =>
+              setCurrentRouteName(state?.index === 0 ? 'Home' : 'Forecast')
+            }>
+            <Stack.Navigator screenOptions={defaultScreenOptions}>
+              <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="Forecast" component={ForecastScreen} />
+            </Stack.Navigator>
+            <NavigationOverlay currentRoute={currentRouteName || 'Home'} />
+          </NavigationContainer>
+        </GestureHandlerRootView>
+      </LocationPermissionsWrapper>
     </Provider>
   );
 };
