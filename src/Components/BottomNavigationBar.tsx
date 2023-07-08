@@ -8,6 +8,7 @@ import {Colors, Metrics} from '../theme';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {addCityToSaved, removeCityFromSaved} from '../redux/features/location';
+import {requestLocationPermission} from './LocationPermissionsWrapper';
 
 type BottomNavigationBarProps = {
   onShowSavedLocations: () => void;
@@ -33,6 +34,10 @@ const BottomNavigationBar: React.FC<BottomNavigationBarProps> = ({
     }
   }, [savedCities, selectedCity]);
 
+  const setcurrentLocationAsSelected = () => {
+    requestLocationPermission();
+  };
+
   const onAddToSavedLocations = () => {
     if (selectedCity) {
       dispatch(addCityToSaved(selectedCity));
@@ -49,7 +54,7 @@ const BottomNavigationBar: React.FC<BottomNavigationBarProps> = ({
     <View style={styles.bottomNavContainer}>
       {/* This button will change to current location */}
 
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => setcurrentLocationAsSelected()}>
         <FontAwesome5 name="location-arrow" size={20} color="black" />
       </TouchableOpacity>
 
