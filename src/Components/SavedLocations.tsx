@@ -1,8 +1,10 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
 import {Colors, Fonts, Metrics} from '../theme';
+import {ICityWithWeather} from '../ts/interfaces';
+import {setSelectedCity} from '../redux/features/location';
 
 type SavedLocationsProps = {
   onClose: () => void;
@@ -13,7 +15,14 @@ const SavedLocations: React.FC<SavedLocationsProps> = ({
   onClose,
   onShowSearchLocation,
 }) => {
+  const dispatch = useDispatch();
   const {savedCities} = useSelector((state: RootState) => state.location);
+
+  const handleSelectSavedLocation = (city: ICityWithWeather) => {
+    dispatch(setSelectedCity(city));
+    onClose();
+  };
+
   return (
     <View style={{width: '100%', flex: 1}}>
       <View style={styles.header}>
@@ -27,7 +36,9 @@ const SavedLocations: React.FC<SavedLocationsProps> = ({
       <View style={{backgroundColor: 'green', flex: 1}}>
         {savedCities.length >= 1 &&
           savedCities.map(city => (
-            <TouchableOpacity key={city.id} onPress={() => {}}>
+            <TouchableOpacity
+              key={city.id}
+              onPress={() => handleSelectSavedLocation(city)}>
               <View>
                 <Text>{city.name}</Text>
                 <Text>{city.weather.main.temp}</Text>

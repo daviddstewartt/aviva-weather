@@ -58,6 +58,7 @@ const SelectedCityForecastHeader: React.FC<
               {selectedCity?.weather.main.temp_max}°C
             </Text>
           </View>
+          {/** @todo: Add a refresh button here  */}
         </View>
       </View>
     </View>
