@@ -3,6 +3,7 @@ import React, {PropsWithChildren, useEffect} from 'react';
 import {PERMISSIONS, request} from 'react-native-permissions';
 import {setLocationsPermissionsGranted} from '../redux/features/location';
 import {useDispatch} from 'react-redux';
+import {getUsersCurrentLocation} from '../util/location';
 
 type LocationPermissionsWrapperProps = {};
 
@@ -21,11 +22,10 @@ const LocationPermissionsWrapper: React.FC<
       const granted = await request(PERMISSION);
 
       if (granted === 'granted') {
-        console.log('You can access the location');
+        await getUsersCurrentLocation();
         dispatch(setLocationsPermissionsGranted(true));
       } else {
-        console.log('Location permission denied');
-        dispatch(setLocationsPermissionsGranted(false));
+        throw new Error('Location permission denied');
       }
     } catch (err) {
       console.warn(err);
