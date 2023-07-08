@@ -26,7 +26,9 @@ const SelectedCityForecastHeader: React.FC<
           <Image
             style={{width: 100, height: 100}}
             source={{
-              uri: getWeatherIconUrl(selectedCity?.weather.weather[0].icon),
+              uri:
+                getWeatherIconUrl(selectedCity?.weather.weather[0].icon) ||
+                null,
             }}
           />
           <Text style={styles.currentTemp}>

@@ -3,9 +3,10 @@ import {PayloadAction} from '@reduxjs/toolkit';
 import {
   requestSelectedCityWeather,
   setSelectedCity,
+  setUsersCurrentLocation,
 } from '../features/location';
-import {getCityWeather} from '../../util/location';
-import {ICity, ICityWithWeather} from '../../ts/interfaces';
+import {getCityWeather, getLocationCity} from '../../util/location';
+import {ICity, ICityWithWeather, LocationCoords} from '../../ts/interfaces';
 import {Config} from '../../../config';
 
 function* fetchCityWeatherData(action: PayloadAction<ICity>) {
@@ -35,8 +36,38 @@ function* fetchCityWeatherData(action: PayloadAction<ICity>) {
   }
 }
 
+function* fetchUsersCurrentLocationCityAndWeatherData(
+  action: PayloadAction<LocationCoords>,
+) {
+  try {
+    console.log('action', action);
+
+    const {longitude, latitude} = action.payload;
+
+    const city = yield call(
+      getLocationCity,
+      latitude,
+      longitude,
+      Config.OPEN_WEATHER_MAP_API_KEY,
+    );
+
+    // get weather data from other generator
+    yield* fetchCityWeatherData({type: '', payload: city});
+  } catch (error) {
+    /**
+     * @todo handle error by creating setSelectedCityError action
+     */
+    console.error(error);
+    yield put({type: setSelectedCity.type, payload: null});
+  }
+}
+
 export default function* () {
   yield all([
     yield takeLatest(requestSelectedCityWeather.type, fetchCityWeatherData),
+    yield takeLatest(
+      setUsersCurrentLocation.type,
+      fetchUsersCurrentLocationCityAndWeatherData,
+    ),
   ]);
 }

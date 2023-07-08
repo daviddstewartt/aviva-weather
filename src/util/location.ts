@@ -49,6 +49,31 @@ const searchLocationCities = async (
 };
 
 /**
+ * Get the city for a location by coordinates using the OpenWeatherMap API
+ * @param {number} lat Latitude of the location
+ * @param {number} lon Longitude of the location
+ * @param {string} API_KEY API key to use for the request
+ * @returns {Promise<ICity>} City for the location
+ */
+const getLocationCity = async (
+  lat: number,
+  lon: number,
+  API_KEY: string,
+): Promise<ICity> => {
+  try {
+    const response = await axios.get(
+      `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${API_KEY}`,
+    );
+
+    return response.data[0];
+  } catch (error) {
+    throw new Error(
+      error.response?.data.message || 'Failed to get location city',
+    );
+  }
+};
+
+/**
  * Get the weather for a city using the OpenWeatherMap API
  * @param {ICity} city City to get the weather for
  * @param {string} API_KEY API key to use for the request
@@ -96,6 +121,7 @@ const getSelectedCityForecast = async (API_KEY: string): Promise<IForecast> => {
 
 export {
   getUsersCurrentLocation,
+  getLocationCity,
   searchLocationCities,
   getCityWeather,
   getSelectedCityForecast,
