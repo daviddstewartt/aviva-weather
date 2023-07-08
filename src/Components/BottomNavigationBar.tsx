@@ -24,12 +24,8 @@ const BottomNavigationBar: React.FC<BottomNavigationBarProps> = ({
   const [isCurrentLocationSaved, setIsCurrentLocationSaved] = useState(false);
 
   useEffect(() => {
-    console.log(isCurrentLocationSaved, selectedCity?.id);
-
     if (selectedCity) {
       const isSaved = savedCities.some(city => city.id === selectedCity.id);
-      console.log('isSaved', isSaved);
-
       setIsCurrentLocationSaved(isSaved);
     }
   }, [savedCities, selectedCity]);
