@@ -8,12 +8,19 @@ import {
 } from 'react-native';
 
 import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
 import {Config} from '../../config';
+
+// Redux
+import {useDispatch} from 'react-redux';
 import {searchLocationCities} from '../util/location';
 import {requestSelectedCityWeather} from '../redux/features/location';
-import {Colors, Metrics} from '../theme';
+
+// Types
 import {ICity} from '../ts/interfaces';
+
+// Styles & Icons
+import {Colors, Metrics} from '../theme';
+import Entype from 'react-native-vector-icons/Entypo';
 
 type SearchLocationsInputProps = {
   onSearchResultsVisibility: (visible: boolean) => void;
@@ -104,12 +111,13 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
           <ActivityIndicator color={Colors.AVIVA_BLUE} />
         ) : searchLocationString.length >= 1 ? (
           <TouchableOpacity
+            style={{alignSelf: 'center', marginRight: Metrics.spacing.xs}}
             onPress={() => {
               setSearchLocationString('');
               setShowCitiesList(false);
               onSearchResultsVisibility(false);
             }}>
-            <Text>Clear</Text>
+            <Entype name="cross" size={30} color="#fff" />
           </TouchableOpacity>
         ) : null}
       </View>
