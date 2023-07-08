@@ -11,7 +11,10 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {Config} from '../../config';
 import {searchLocationCities} from '../util/location';
-import {setSelectedCity} from '../redux/features/location';
+import {
+  requestSelectedCityWeather,
+  setSelectedCity,
+} from '../redux/features/location';
 import {Colors, Metrics} from '../theme';
 import {ICity} from '../ts/interfaces';
 
@@ -84,7 +87,7 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
       inputRef.current.blur();
     }
 
-    dispatch(setSelectedCity(city)); // Set current city in state
+    dispatch(requestSelectedCityWeather(city)); // get the current city weathe & store it in state
   };
 
   return (

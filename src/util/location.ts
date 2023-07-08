@@ -1,8 +1,13 @@
 import Geolocation from '@react-native-community/geolocation';
 import {store} from '../redux/store';
 import axios from 'axios';
-import {ICity} from '../ts/interfaces';
+import {ICity, IWeather} from '../ts/interfaces';
 
+/**
+ * Get the users current location using the Geolocation API
+ * and sets it in state
+ * @returns {Promise<void>}
+ */
 const getUsersCurrentLocation = async (): Promise<void> => {
   await Geolocation.getCurrentPosition(
     position => {
@@ -24,8 +29,8 @@ const getUsersCurrentLocation = async (): Promise<void> => {
  * Search for cities that match the search text
  * using the OpenWeatherMap API
  *
- * @param searchText city name to search for
- * @param API_KEY API key to use for the request
+ * @param {string} searchText city name to search for
+ * @param {string} API_KEY API key to use for the request
  * @returns {Promise<ICity[]>} Cities that match the search text
  */
 const searchLocationCities = async (
@@ -43,4 +48,25 @@ const searchLocationCities = async (
   }
 };
 
-export {getUsersCurrentLocation, searchLocationCities};
+/**
+ * Get the weather for a city using the OpenWeatherMap API
+ * @param {ICity} city City to get the weather for
+ * @param {string} API_KEY API key to use for the request
+ * @returns {Promise<IWeather>} Weather data for the city
+ */
+const getCityWeather = async (
+  city: ICity,
+  API_KEY: string,
+): Promise<IWeather> => {
+  try {
+    const response = await axios.get(
+      `http://api.openweathermap.org/data/2.5/weather?lat=${city.lat}&lon=${city.lon}&appid=${API_KEY}`,
+    );
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data.message || 'Failed to get cities');
+  }
+};
+
+export {getUsersCurrentLocation, searchLocationCities, getCityWeather};
