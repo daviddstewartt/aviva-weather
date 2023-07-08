@@ -1,5 +1,5 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {ICity, LocationCoords} from '../../ts/interfaces';
+import {ICity, ICityWithWeather, LocationCoords} from '../../ts/interfaces';
 
 import initialState from '../selectors/location';
 
@@ -14,10 +14,11 @@ const locationSlice = createSlice({
     setUsersCurrentLocation: (state, action: PayloadAction<LocationCoords>) => {
       state.currentLocation = action.payload;
     },
-    setSelectedCity: (state, action: PayloadAction<ICity>) => {
+    requestSelectedCityWeather: () => {}, // Action only for saga side effects
+    setSelectedCity: (state, action: PayloadAction<ICityWithWeather>) => {
       state.selectedCity = action.payload;
     },
-    addCityToSaved: (state, action: PayloadAction<ICity>) => {
+    addCityToSaved: (state, action: PayloadAction<ICityWithWeather>) => {
       state.savedCities.push(action.payload);
     },
     removeCityFromSaved: (state, action: PayloadAction<string>) => {
@@ -38,6 +39,7 @@ const locationSlice = createSlice({
 export const {
   setLocationsPermissionsGranted,
   setUsersCurrentLocation,
+  requestSelectedCityWeather,
   setSelectedCity,
   addCityToSaved,
   removeCityFromSaved,
