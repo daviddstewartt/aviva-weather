@@ -1,11 +1,14 @@
 import {StyleSheet, TouchableOpacity, View, Text} from 'react-native';
 import React, {Fragment, useState} from 'react';
 
+// Styles
+import {Metrics} from '../theme';
+
 // Components
 import ForecastToggle from './ForecastToggle';
 import SearchLocationsInput from './SearchLocationsInput';
-import {Metrics} from '../theme';
 import SavedLocations from './SavedLocations';
+import SelectedCityForecastHeader from './SelectedCityForecastHeader';
 
 type ForecastToggleOverlayProps = {
   currentRoute: string;
@@ -26,6 +29,9 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
             !showForecastToggle || showSavedLocations ? '#00000080' : undefined,
         },
       ]}>
+      {showForecastToggle && !showSavedLocations && (
+        <SelectedCityForecastHeader />
+      )}
       <View style={{alignItems: 'center', width: '100%', flex: 1}}>
         {!showSavedLocations && (
           <Fragment>
