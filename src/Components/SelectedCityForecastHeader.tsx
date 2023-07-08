@@ -1,21 +1,30 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {Colors, Fonts, Metrics} from '../theme';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
+import {requestSelectedCityWeather} from '../redux/features/location';
+import {ICity} from '../ts/interfaces';
+import {formatTime} from '../util/datetime';
 
 // Styles & Icons
+import {Colors, Fonts, Metrics} from '../theme';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 type SelectedCityForecastHeaderProps = {};
 
 const SelectedCityForecastHeader: React.FC<
   SelectedCityForecastHeaderProps
 > = () => {
+  const dispatch = useDispatch();
   const {selectedCity} = useSelector((state: RootState) => state.location);
 
   const getWeatherIconUrl = (iconCode: string | null): string => {
     return iconCode ? `http://openweathermap.org/img/w/${iconCode}.png` : '';
+  };
+
+  const handleRefreshLocationData = () => {
+    dispatch(requestSelectedCityWeather(selectedCity as ICity));
   };
 
   return (
@@ -47,18 +56,37 @@ const SelectedCityForecastHeader: React.FC<
           <Text style={styles.weatherDesc}>
             {selectedCity?.weather.weather[0].description || '---'}
           </Text>
-          <View style={styles.minMaxTempContainer}>
-            <FontAwesome5 name={'temperature-high'} size={16} color={'white'} />
-            <Text
-              style={{
-                color: Colors.AVIVA_YELLOW,
-                marginLeft: Metrics.spacing.m,
-              }}>
-              {selectedCity?.weather.main.temp_min}°C /{' '}
-              {selectedCity?.weather.main.temp_max}°C
-            </Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={styles.minMaxTempContainer}>
+              <FontAwesome5
+                name={'temperature-high'}
+                size={16}
+                color={'white'}
+              />
+              <Text
+                style={{
+                  color: Colors.AVIVA_YELLOW,
+                  marginLeft: Metrics.spacing.m,
+                }}>
+                {selectedCity?.weather.main.temp_min}°C /{' '}
+                {selectedCity?.weather.main.temp_max}°C
+              </Text>
+            </View>
+            {selectedCity && (
+              <TouchableOpacity
+                onPress={handleRefreshLocationData}
+                style={{marginLeft: Metrics.spacing.m}}>
+                <Ionicons
+                  name={'md-refresh'}
+                  size={20}
+                  color={Colors.TEXT_LIGHT}
+                />
+              </TouchableOpacity>
+            )}
           </View>
-          {/** @todo: Add a refresh button here  */}
+          <Text style={{fontSize: Fonts.size.xs}}>
+            Last updated: {formatTime(selectedCity?.timestamp)}
+          </Text>
         </View>
       </View>
     </View>
