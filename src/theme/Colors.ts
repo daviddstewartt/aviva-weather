@@ -4,6 +4,7 @@ const Colors = {
   AVIVA_GREEN: '#59B336',
 
   TEXT: '#000000',
+  TEXT_LIGHT: '#FFFFFF',
 };
 
 export default Colors;
