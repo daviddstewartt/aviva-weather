@@ -26,7 +26,7 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
             !showForecastToggle || showSavedLocations ? '#00000080' : undefined,
         },
       ]}>
-      <View style={{alignItems: 'center', width: '100%'}}>
+      <View style={{alignItems: 'center', width: '100%', flex: 1}}>
         {!showSavedLocations && (
           <Fragment>
             <SearchLocationsInput
@@ -42,16 +42,32 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
 
         {/* Saved Locations Overlay */}
         {showSavedLocations && (
-          <SavedLocations onClose={() => setShowSavedLocations(false)} />
+          <SavedLocations
+            onClose={() => setShowSavedLocations(false)}
+            onShowSearchLocation={() => {
+              setShowSavedLocations(false);
+              setShowForecastToggle(!showForecastToggle);
+            }}
+          />
         )}
       </View>
 
       {/* Save Locations Overlay Toggle */}
       {showForecastToggle && (
         <View style={styles.bottomNavContainer}>
+          {/* This button will change to current location */}
+          <TouchableOpacity onPress={() => {}}>
+            <View>
+              {/* Change to icon */}
+              <Text style={{color: 'black'}}>Current Location</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* This button shows saved cities */}
           <TouchableOpacity
             onPress={() => setShowSavedLocations(!showSavedLocations)}>
-            <View style={styles.menuHeaderContainer}>
+            <View>
+              {/* Change to icon */}
               <Text style={{color: 'black'}}>Saved Locations</Text>
             </View>
           </TouchableOpacity>
