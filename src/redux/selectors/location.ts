@@ -1,9 +1,9 @@
-import {ICity, LocationCoords} from '../../ts/interfaces';
+import {ICity, ICityWithWeather, LocationCoords} from '../../ts/interfaces';
 export interface LocationState {
   permissionsGranted: boolean;
   currentLocation: LocationCoords | null;
   selectedCity: ICity | null;
-  savedCities: ICity[];
+  savedCities: ICityWithWeather[];
 }
 
 const initialState: LocationState = {
