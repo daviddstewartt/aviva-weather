@@ -4,6 +4,7 @@ import sagas from './sagas';
 
 // Reducers (if there were more i would combine reducers and import them here)
 import locationReducer from './features/location';
+import layoutReducer from './features/layout';
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
@@ -11,6 +12,7 @@ const middleware = [sagaMiddleware];
 const store = configureStore({
   reducer: {
     location: locationReducer,
+    layout: layoutReducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(middleware),
 });
