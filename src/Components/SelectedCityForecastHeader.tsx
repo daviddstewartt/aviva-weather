@@ -10,6 +10,7 @@ import {formatTime} from '../util/datetime';
 import {Colors, Fonts, Metrics} from '../theme';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import WeatherIcon from './WeatherIcon';
 
 type SelectedCityForecastHeaderProps = {};
 
@@ -27,21 +28,18 @@ const SelectedCityForecastHeader: React.FC<
     dispatch(requestSelectedCityWeather(selectedCity as ICity));
   };
 
-  return (
+  return selectedCity ? (
     <View style={{width: '100%'}}>
       <View style={styles.headerContainer}>
         {/* Current Weather icon ontop of Current Temp */}
         <View style={styles.currentWeatherContainer}>
-          <Image
-            style={{width: 100, height: 100}}
-            source={{
-              uri:
-                getWeatherIconUrl(selectedCity?.weather.weather[0].icon) ||
-                null,
-            }}
+          <WeatherIcon
+            icon={selectedCity.weather.weather[0].icon}
+            height={100}
+            width={100}
           />
           <Text style={styles.currentTemp}>
-            {selectedCity?.weather.main.temp || '-'}°C
+            {selectedCity.weather.main.temp || '-'}°C
           </Text>
         </View>
 
@@ -51,7 +49,7 @@ const SelectedCityForecastHeader: React.FC<
             numberOfLines={2}
             ellipsizeMode={'tail'}
             style={styles.locationTitle}>
-            {selectedCity?.name || '---'}
+            {selectedCity.name || '---'}
           </Text>
           <Text style={styles.weatherDesc}>
             {selectedCity?.weather.weather[0].description || '---'}
@@ -90,7 +88,7 @@ const SelectedCityForecastHeader: React.FC<
         </View>
       </View>
     </View>
-  );
+  ) : null;
 };
 
 export default SelectedCityForecastHeader;
