@@ -1,4 +1,4 @@
-import {Platform} from 'react-native';
+import {AppState, Platform} from 'react-native';
 import React, {PropsWithChildren, useEffect} from 'react';
 import {store} from '../redux/store';
 import {PERMISSIONS, request} from 'react-native-permissions';
@@ -32,7 +32,15 @@ const LocationPermissionsWrapper: React.FC<
   LocationPermissionsWrapperProps & PropsWithChildren
 > = ({children}) => {
   useEffect(() => {
-    requestLocationPermission();
+    let AppStateListener = AppState.addEventListener('change', state => {
+      if (state === 'background') {
+        requestLocationPermission();
+      }
+    });
+
+    return () => {
+      AppStateListener.remove();
+    };
   }, []);
 
   return children;

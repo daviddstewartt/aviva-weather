@@ -34,7 +34,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       {/* <Text>Current Location: {JSON.stringify(selectedCity)}</Text> */}
       {/* <Text>{JSON.stringify(currentLocation)}</Text> */}
 
-      {!permissionsGranted && <LocationSettingsLink />}
+      {!selectedCity && !permissionsGranted && <LocationSettingsLink />}
     </View>
   );
 };
