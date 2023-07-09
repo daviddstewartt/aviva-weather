@@ -22,6 +22,9 @@ import {ICity} from '../ts/interfaces';
 import {Colors, Metrics} from '../theme';
 import Entype from 'react-native-vector-icons/Entypo';
 
+// Components
+import LinearGradient from 'react-native-linear-gradient';
+
 type SearchLocationsInputProps = {
   onSearchResultsVisibility: (visible: boolean) => void;
 };
@@ -100,33 +103,44 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
 
   return (
     <View style={styles.searchContainer}>
-      <View style={styles.inputContainer}>
-        <TextInput
-          ref={inputRef}
-          placeholder="Search for a city"
-          value={searchLocationString}
-          style={styles.input}
-          onBlur={() => {
-            onSearchResultsVisibility(false);
-            setShowCitiesList(false);
-          }}
-          onFocus={() => onSearchResultsVisibility(true)}
-          onChangeText={setSearchLocationString}
-        />
-        {isSearchLoading ? (
-          <ActivityIndicator color={Colors.AVIVA_BLUE} />
-        ) : inputRef.current?.isFocused() ? (
-          <TouchableOpacity
-            style={{alignSelf: 'center', marginRight: Metrics.spacing.xs}}
-            onPress={() => {
-              setSearchLocationString('');
-              setShowCitiesList(false);
+      <LinearGradient
+        colors={[Colors.SPACE_GREY_PRIMARY, Colors.SPACE_GREY_SECONDARY]}
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        style={{
+          borderRadius: Metrics.radius.circle,
+          marginTop: Metrics.spacing.l,
+        }}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            ref={inputRef}
+            placeholder="Search for a city"
+            placeholderTextColor={Colors.LIGHT_GREY}
+            value={searchLocationString}
+            style={styles.input}
+            onBlur={() => {
               onSearchResultsVisibility(false);
-            }}>
-            <Entype name="cross" size={30} color="#fff" />
-          </TouchableOpacity>
-        ) : null}
-      </View>
+              setShowCitiesList(false);
+            }}
+            onFocus={() => onSearchResultsVisibility(true)}
+            onChangeText={setSearchLocationString}
+          />
+
+          {isSearchLoading ? (
+            <ActivityIndicator color={Colors.PURPLE_PRIMARY} />
+          ) : inputRef.current?.isFocused() ? (
+            <TouchableOpacity
+              style={{alignSelf: 'center', marginRight: Metrics.spacing.xs}}
+              onPress={() => {
+                setSearchLocationString('');
+                setShowCitiesList(false);
+                onSearchResultsVisibility(false);
+              }}>
+              <Entype name="cross" size={30} color="#fff" />
+            </TouchableOpacity>
+          ) : null}
+        </View>
+      </LinearGradient>
 
       {!searchError && showCitiesList && (
         <View style={styles.searchResultsContainer}>
@@ -177,19 +191,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputContainer: {
-    backgroundColor: Colors.AVIVA_YELLOW,
+    // backgroundColor: Colors.AVIVA_YELLOW,
     width: '90%',
     height: 50,
-    borderRadius: Metrics.radius.circle,
+    // borderRadius: Metrics.radius.circle,
     paddingHorizontal: 20,
-    marginTop: Metrics.spacing.l,
+
     flexDirection: 'row',
   },
   input: {
     flex: 1,
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'black',
+    color: Colors.TEXT_LIGHT,
   },
   searchResultsContainer: {
     width: '90%',
@@ -199,7 +213,7 @@ const styles = StyleSheet.create({
   searchResultItem: {
     width: '100%',
     paddingVertical: Metrics.spacing.l,
-    borderBottomColor: Colors.AVIVA_YELLOW,
+    borderBottomColor: Colors.PURPLE_SECONDARY,
     borderBottomWidth: 1,
   },
   searchResultItemText: {

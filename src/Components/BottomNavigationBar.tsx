@@ -9,6 +9,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {addCityToSaved, removeCityFromSaved} from '../redux/features/location';
 import {requestLocationPermission} from './LocationPermissionsWrapper';
+import LinearGradient from 'react-native-linear-gradient';
 
 type BottomNavigationBarProps = {
   onShowSavedLocations: () => void;
@@ -47,36 +48,45 @@ const BottomNavigationBar: React.FC<BottomNavigationBarProps> = ({
   };
 
   return (
-    <View style={styles.bottomNavContainer}>
-      {/* This button will change to current location */}
+    <LinearGradient
+      colors={[Colors.SPACE_GREY_PRIMARY, 'transparent']}
+      start={{x: 0, y: 1}}
+      end={{x: 0, y: 0}}>
+      <View style={styles.bottomNavContainer}>
+        {/* This button will change to current location */}
 
-      <TouchableOpacity onPress={() => setcurrentLocationAsSelected()}>
-        <FontAwesome5 name="location-arrow" size={20} color="black" />
-      </TouchableOpacity>
+        <TouchableOpacity onPress={() => setcurrentLocationAsSelected()}>
+          <FontAwesome5 name="location-arrow" size={20} color={Colors.LIGHT} />
+        </TouchableOpacity>
 
-      {/* This button shows saved cities */}
-      <TouchableOpacity onPress={() => onShowSavedLocations()}>
-        <View>
-          {/* Change to icon */}
-          <Text style={{color: 'black'}}>Saved Locations</Text>
-        </View>
-      </TouchableOpacity>
+        {/* This button shows saved cities */}
+        <TouchableOpacity onPress={() => onShowSavedLocations()}>
+          <View>
+            {/* Change to icon */}
+            <Text style={styles.text}>Saved Locations</Text>
+          </View>
+        </TouchableOpacity>
 
-      {/* This button add to saved lists */}
-      <TouchableOpacity
-        disabled={!selectedCity}
-        onPress={() =>
-          !isCurrentLocationSaved
-            ? onAddToSavedLocations()
-            : onRemoveFromSavedLocations()
-        }>
-        <Ionicons
-          name={isCurrentLocationSaved ? 'md-bookmark' : 'md-bookmark-outline'}
-          size={20}
-          color="black"
-        />
-      </TouchableOpacity>
-    </View>
+        {/* This button add to saved lists */}
+        <TouchableOpacity
+          disabled={!selectedCity}
+          onPress={() =>
+            !isCurrentLocationSaved
+              ? onAddToSavedLocations()
+              : onRemoveFromSavedLocations()
+          }>
+          <Ionicons
+            name={
+              isCurrentLocationSaved ? 'md-bookmark' : 'md-bookmark-outline'
+            }
+            size={20}
+            color={
+              !isCurrentLocationSaved ? Colors.LIGHT : Colors.PURPLE_PRIMARY
+            }
+          />
+        </TouchableOpacity>
+      </View>
+    </LinearGradient>
   );
 };
 
@@ -88,7 +98,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
-    backgroundColor: Colors.AVIVA_BLUE,
     paddingVertical: Metrics.spacing.l,
+  },
+  text: {
+    color: Colors.LIGHT,
+    fontWeight: 'bold',
   },
 });

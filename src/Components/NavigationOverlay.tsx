@@ -1,5 +1,10 @@
 import {StyleSheet, View} from 'react-native';
 import React, {Fragment, useState} from 'react';
+import {mainToColourGradient} from '../data/Weather';
+
+// Redux
+import {useSelector} from 'react-redux';
+import {RootState} from '../redux/store';
 
 // Components
 import ForecastToggle from './ForecastToggle';
@@ -8,9 +13,6 @@ import SavedLocations from './SavedLocations';
 import SelectedCityForecastHeader from './SelectedCityForecastHeader';
 import BottomNavigationBar from './BottomNavigationBar';
 import LinearGradient from 'react-native-linear-gradient';
-import {useSelector} from 'react-redux';
-import {RootState} from '../redux/store';
-import {mainToColourGradient} from '../data/Weather';
 
 type ForecastToggleOverlayProps = {
   currentRoute: string;
@@ -37,7 +39,7 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
       <LinearGradient
         pointerEvents="none"
         colors={
-          mainWeatherCondition
+          mainWeatherCondition && !(!showForecastToggle || showSavedLocations)
             ? [
                 ...mainToColourGradient(mainWeatherCondition).gradient,
                 'transparent',

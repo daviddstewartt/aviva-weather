@@ -1,16 +1,21 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
+import {ICity} from '../ts/interfaces';
+import {formatTime} from '../util/datetime';
+
+// Redux
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
 import {requestSelectedCityWeather} from '../redux/features/location';
-import {ICity} from '../ts/interfaces';
-import {formatTime} from '../util/datetime';
 
 // Styles & Icons
 import {Colors, Fonts, Metrics} from '../theme';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import WeatherIcon from './WeatherIcon';
+
+// Components
+import LinearGradient from 'react-native-linear-gradient';
 
 type SelectedCityForecastHeaderProps = {};
 
@@ -19,10 +24,6 @@ const SelectedCityForecastHeader: React.FC<
 > = () => {
   const dispatch = useDispatch();
   const {selectedCity} = useSelector((state: RootState) => state.location);
-
-  const getWeatherIconUrl = (iconCode: string | null): string => {
-    return iconCode ? `http://openweathermap.org/img/w/${iconCode}.png` : '';
-  };
 
   const handleRefreshLocationData = () => {
     dispatch(requestSelectedCityWeather(selectedCity as ICity));
@@ -55,21 +56,30 @@ const SelectedCityForecastHeader: React.FC<
             {selectedCity?.weather.weather[0].description || '---'}
           </Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <View style={styles.minMaxTempContainer}>
-              <FontAwesome5
-                name={'temperature-high'}
-                size={16}
-                color={'white'}
-              />
-              <Text
-                style={{
-                  color: Colors.AVIVA_YELLOW,
-                  marginLeft: Metrics.spacing.m,
-                }}>
-                {selectedCity?.weather.main.temp_min}°C /{' '}
-                {selectedCity?.weather.main.temp_max}°C
-              </Text>
-            </View>
+            <LinearGradient
+              start={{x: 0, y: 0}}
+              end={{x: 1, y: 0}}
+              colors={[
+                Colors.SPACE_GREY_PRIMARY + '90',
+                Colors.SPACE_GREY_SECONDARY,
+              ]}
+              style={{borderRadius: Metrics.radius.circle}}>
+              <View style={styles.minMaxTempContainer}>
+                <FontAwesome5
+                  name={'temperature-high'}
+                  size={16}
+                  color={Colors.PURPLE_PRIMARY}
+                />
+                <Text
+                  style={{
+                    color: Colors.PURPLE_PRIMARY,
+                    marginLeft: Metrics.spacing.m,
+                  }}>
+                  {selectedCity?.weather.main.temp_min}°C /{' '}
+                  {selectedCity?.weather.main.temp_max}°C
+                </Text>
+              </View>
+            </LinearGradient>
             {selectedCity && (
               <TouchableOpacity
                 onPress={handleRefreshLocationData}
@@ -124,7 +134,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'flex-start',
     justifyContent: 'flex-start',
-    backgroundColor: Colors.AVIVA_BLUE,
     paddingVertical: Metrics.spacing.s,
     paddingHorizontal: Metrics.spacing.m,
     borderRadius: Metrics.radius.circle,
