@@ -3,6 +3,7 @@ import createSagaMiddleware from 'redux-saga';
 import sagas from './sagas';
 
 // Reducers (if there were more i would combine reducers and import them here)
+import appReducer from './features/app';
 import locationReducer from './features/location';
 import layoutReducer from './features/layout';
 
@@ -11,6 +12,7 @@ const middleware = [sagaMiddleware];
 
 const store = configureStore({
   reducer: {
+    app: appReducer,
     location: locationReducer,
     layout: layoutReducer,
   },

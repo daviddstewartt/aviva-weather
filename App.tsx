@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
+import {AppState} from 'react-native';
 
 import {Provider} from 'react-redux';
 import {store} from './src/redux/store';
+import {setAppStateStatus} from './src/redux/features/app';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -22,6 +24,16 @@ const App = () => {
   const defaultScreenOptions = {
     headerShown: false,
   };
+
+  useEffect(() => {
+    const AppStateListener = AppState.addEventListener('change', state => {
+      store.dispatch(setAppStateStatus(state));
+    });
+
+    return () => {
+      AppStateListener.remove();
+    };
+  }, []);
 
   return (
     <Provider store={store}>

@@ -1,9 +1,11 @@
-import {AppState, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import React, {PropsWithChildren, useEffect} from 'react';
-import {store} from '../redux/store';
+import {RootState, store} from '../redux/store';
 import {PERMISSIONS, request} from 'react-native-permissions';
 import {setLocationsPermissionsGranted} from '../redux/features/location';
 import {getUsersCurrentLocation} from '../util/location';
+import {useDispatch, useSelector} from 'react-redux';
+import {setRequestingLocation} from '../redux/features/app';
 
 type LocationPermissionsWrapperProps = {};
 
@@ -19,29 +21,31 @@ export const requestLocationPermission = async () => {
     if (granted === 'granted') {
       await getUsersCurrentLocation();
       store.dispatch(setLocationsPermissionsGranted(true));
+      store.dispatch(setRequestingLocation(false));
     } else {
       throw new Error('Location permission denied');
     }
   } catch (err) {
     console.warn(err);
     store.dispatch(setLocationsPermissionsGranted(false));
+    store.dispatch(setRequestingLocation(false));
   }
 };
 
 const LocationPermissionsWrapper: React.FC<
   LocationPermissionsWrapperProps & PropsWithChildren
 > = ({children}) => {
-  useEffect(() => {
-    let AppStateListener = AppState.addEventListener('change', state => {
-      if (state === 'background') {
-        requestLocationPermission();
-      }
-    });
+  const dispatch = useDispatch();
+  const {appState, requestingLocation} = useSelector(
+    (state: RootState) => state.app,
+  );
 
-    return () => {
-      AppStateListener.remove();
-    };
-  }, []);
+  useEffect(() => {
+    if (appState === 'active' && !requestingLocation) {
+      dispatch(setRequestingLocation(true));
+      requestLocationPermission();
+    }
+  }, [appState]);
 
   return children;
 };
