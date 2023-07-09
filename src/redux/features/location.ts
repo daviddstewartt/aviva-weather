@@ -17,6 +17,7 @@ const locationSlice = createSlice({
     requestSelectedCityWeather: (state, action: PayloadAction<ICity>) => {}, // Action only for saga side effects
     setSelectedCity: (state, action: PayloadAction<ICityWithWeather>) => {
       state.selectedCity = action.payload;
+      state.isLoading = false;
     },
     addCityToSaved: (state, action: PayloadAction<ICityWithWeather>) => {
       state.savedCities.push(action.payload);
@@ -28,6 +29,9 @@ const locationSlice = createSlice({
 
       return state;
     },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
@@ -38,6 +42,7 @@ export const {
   setSelectedCity,
   addCityToSaved,
   removeCityFromSaved,
+  setIsLoading,
 } = locationSlice.actions;
 
 export default locationSlice.reducer;

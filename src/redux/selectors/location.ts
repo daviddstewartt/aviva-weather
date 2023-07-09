@@ -4,6 +4,7 @@ export interface LocationState {
   currentLocation: LocationCoords | null;
   selectedCity: ICityWithWeather | null;
   savedCities: ICityWithWeather[];
+  isLoading: boolean;
 }
 
 const initialState: LocationState = {
@@ -11,6 +12,7 @@ const initialState: LocationState = {
   currentLocation: null,
   selectedCity: null,
   savedCities: [],
+  isLoading: true,
 };
 
 export default initialState;

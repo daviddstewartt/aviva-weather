@@ -2,27 +2,17 @@ import {StyleSheet, Text, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
-import {requestLocationPermission} from '../../Components/LocationPermissionsWrapper';
 import LocationSettingsLink from '../../Components/LocationSettingsLink';
 import {Colors} from '../../theme';
 
 type HomeScreenProps = {};
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
-  const {selectedCity, currentLocation, permissionsGranted} = useSelector(
-    (state: RootState) => state.location,
-  );
-
-  useEffect(() => {
-    // if the user hasnt given permissions, ask for them
-    if (!permissionsGranted) {
-      // requestLocationPermission();
-      requestLocationPermission();
-    }
-  }, [permissionsGranted]);
+  const {selectedCity, currentLocation, permissionsGranted, isLoading} =
+    useSelector((state: RootState) => state.location);
 
   /**
-   * @todo When permissions are denied, show a message to the user to go to settings
+   *
    * @todo When theres no selectedCity, use the users current city
    * @todo get the users current city
    */
@@ -31,6 +21,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       <Text>Homescreen</Text>
       <Text style={{marginTop: 260}}>Selected City: {selectedCity?.name}</Text>
       <Text>locaotion Permissoin: {permissionsGranted.toString()}</Text>
+      <Text>isLoading: {isLoading.toString()}</Text>
       {/* <Text>Current Location: {JSON.stringify(selectedCity)}</Text> */}
       {/* <Text>{JSON.stringify(currentLocation)}</Text> */}
 

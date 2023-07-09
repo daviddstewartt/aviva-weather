@@ -2,6 +2,7 @@ import {all, takeLatest, call, put} from 'redux-saga/effects';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {
   requestSelectedCityWeather,
+  setIsLoading,
   setSelectedCity,
   setUsersCurrentLocation,
 } from '../features/location';
@@ -42,6 +43,7 @@ function* fetchUsersCurrentLocationCityAndWeatherData(
 ) {
   try {
     console.log('action', action);
+    yield put({type: setIsLoading.type, payload: true});
 
     const {longitude, latitude} = action.payload;
 
