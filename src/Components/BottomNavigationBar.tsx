@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     paddingVertical: Metrics.spacing.l,
   },
   text: {

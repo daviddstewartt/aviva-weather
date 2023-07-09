@@ -29,12 +29,16 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <TouchableOpacity
-      style={{borderRadius: Metrics.radius.circle, overflow: 'hidden'}}
+      style={{
+        borderRadius: Metrics.radius.circle,
+        overflow: 'hidden',
+        ...style,
+      }}
       onPress={onPress}>
       <View
         style={[
           styles.button,
-          style,
+
           {backgroundColor: bgColor ? bgColor : undefined},
         ]}>
         {gradientColors && (
