@@ -29,6 +29,7 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
 
   return (
     <View
+      pointerEvents={'box-none'}
       style={[
         styles.overlay,
         {
@@ -37,7 +38,7 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
         },
       ]}>
       <LinearGradient
-        pointerEvents="none"
+        pointerEvents={'auto'}
         colors={
           mainWeatherCondition && !(!showForecastToggle || showSavedLocations)
             ? [
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flex: 1,
     justifyContent: 'space-between',
+    pointerEvents: 'box-none',
   },
   gradient: {
     position: 'absolute',
