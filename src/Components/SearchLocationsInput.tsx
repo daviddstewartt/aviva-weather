@@ -21,6 +21,7 @@ import {ICity} from '../ts/interfaces';
 // Styles & Icons
 import {Colors, Metrics} from '../theme';
 import Entype from 'react-native-vector-icons/Entypo';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // Components
 import LinearGradient from 'react-native-linear-gradient';
@@ -90,15 +91,23 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
    * @param {ICity} city - The city to select
    */
   const onSelectCity = (city: ICity): void => {
-    onSearchResultsVisibility(false);
-    setShowCitiesList(false);
-    setSearchLocationString('');
+    resetSearchState();
     // unfocus the input
     if (inputRef.current) {
       inputRef.current.blur();
     }
 
     dispatch(requestSelectedCityWeather(city)); // get the current city weathe & store it in state
+  };
+
+  const resetSearchState = () => {
+    setSearchLocationString('');
+    setShowCitiesList(false);
+    onSearchResultsVisibility(false);
+    setSearchError(null);
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
   };
 
   return (
@@ -118,10 +127,7 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
             placeholderTextColor={Colors.LIGHT_GREY}
             value={searchLocationString}
             style={styles.input}
-            onBlur={() => {
-              onSearchResultsVisibility(false);
-              setShowCitiesList(false);
-            }}
+            onBlur={() => resetSearchState()}
             onFocus={() => onSearchResultsVisibility(true)}
             onChangeText={setSearchLocationString}
           />
@@ -131,11 +137,7 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
           ) : inputRef.current?.isFocused() ? (
             <TouchableOpacity
               style={{alignSelf: 'center', marginRight: Metrics.spacing.xs}}
-              onPress={() => {
-                setSearchLocationString('');
-                setShowCitiesList(false);
-                onSearchResultsVisibility(false);
-              }}>
+              onPress={() => resetSearchState()}>
               <Entype name="cross" size={30} color="#fff" />
             </TouchableOpacity>
           ) : null}
@@ -174,8 +176,16 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
       )}
 
       {searchError && (
-        <View style={{alignItems: 'center', marginTop: Metrics.spacing.s}}>
-          <Text style={styles.searchResultItemText}>{searchError}</Text>
+        <View style={{alignItems: 'center', marginTop: Metrics.spacing.l}}>
+          <MaterialIcons
+            name="error"
+            size={60}
+            color={Colors.PURPLE_SECONDARY}
+          />
+          <Text style={styles.searchResultItemText}>
+            Oh no, something went wrong
+          </Text>
+          <Text style={styles.errorText}>{searchError}</Text>
         </View>
       )}
     </View>
@@ -191,10 +201,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputContainer: {
-    // backgroundColor: Colors.AVIVA_YELLOW,
     width: '90%',
     height: 50,
-    // borderRadius: Metrics.radius.circle,
     paddingHorizontal: 20,
 
     flexDirection: 'row',
@@ -220,5 +228,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
+  },
+  errorText: {
+    color: Colors.LIGHT_GREY,
+    marginTop: Metrics.spacing.m,
+    fontSize: 16,
   },
 });
