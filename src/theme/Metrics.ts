@@ -12,6 +12,7 @@ const Metrics = {
   radius: {
     circle: 500,
     rounded: 5,
+    rounded2: 20,
   },
 };
 
