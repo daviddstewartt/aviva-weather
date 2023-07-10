@@ -128,6 +128,8 @@ export interface IForecast {
   uvi: number;
 }
 
+export interface IForecastDaily {}
+
 export interface IForecastHourly {
   dt: number;
   temp: number;
@@ -154,4 +156,15 @@ export interface IForecastHourly {
     description: string;
     icon: string;
   }[];
+}
+
+export interface IForecastResponse {
+  // current: IForecast;
+  lat: number;
+  lon: number;
+  timezone: string;
+  timezone_offset: number;
+  hourly: IForecastHourly[];
+  daily: IForecastDaily[];
+  alerts: any[];
 }
