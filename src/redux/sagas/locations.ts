@@ -12,6 +12,7 @@ import {ICity, ICityWithWeather, LocationCoords} from '../../ts/interfaces';
 import {Config} from '../../../config';
 
 function* fetchCityWeatherData(action: PayloadAction<ICity>) {
+  yield put({type: setIsLoading.type, payload: true});
   try {
     const cityWeather = yield call(
       getCityWeather,
