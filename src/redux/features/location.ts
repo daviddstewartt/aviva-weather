@@ -32,6 +32,9 @@ const locationSlice = createSlice({
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
     },
+    setError: (state, action: PayloadAction<string>) => {
+      state.error = action.payload;
+    },
   },
 });
 
@@ -43,6 +46,7 @@ export const {
   addCityToSaved,
   removeCityFromSaved,
   setIsLoading,
+  setError,
 } = locationSlice.actions;
 
 export default locationSlice.reducer;

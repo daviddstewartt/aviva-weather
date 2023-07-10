@@ -1,31 +1,28 @@
 import {StyleSheet, Text, View} from 'react-native';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
-import LocationSettingsLink from '../../Components/LocationSettingsLink';
 import {Colors} from '../../theme';
+import ErrorHandlerUI from './ErrorHandlerUI';
 
 type HomeScreenProps = {};
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
-  const {selectedCity, currentLocation, permissionsGranted, isLoading} =
-    useSelector((state: RootState) => state.location);
+  const {selectedCity, isLoading} = useSelector(
+    (state: RootState) => state.location,
+  );
 
-  /**
-   *
-   * @todo When theres no selectedCity, use the users current city
-   * @todo get the users current city
-   */
   return (
     <View style={styles.container}>
       <Text>Homescreen</Text>
       <Text style={{marginTop: 260}}>Selected City: {selectedCity?.name}</Text>
-      <Text>locaotion Permissoin: {permissionsGranted.toString()}</Text>
       <Text>isLoading: {isLoading.toString()}</Text>
       {/* <Text>Current Location: {JSON.stringify(selectedCity)}</Text> */}
       {/* <Text>{JSON.stringify(currentLocation)}</Text> */}
 
-      {!selectedCity && !permissionsGranted && <LocationSettingsLink />}
+      <ErrorHandlerUI>
+        <Text>Children</Text>
+      </ErrorHandlerUI>
     </View>
   );
 };

@@ -2,6 +2,7 @@ import {all, takeLatest, call, put} from 'redux-saga/effects';
 import {PayloadAction} from '@reduxjs/toolkit';
 import {
   requestSelectedCityWeather,
+  setError,
   setIsLoading,
   setSelectedCity,
   setUsersCurrentLocation,
@@ -30,11 +31,9 @@ function* fetchCityWeatherData(action: PayloadAction<ICity>) {
 
     yield put({type: setSelectedCity.type, payload: newCityWeather});
   } catch (error) {
-    /**
-     * @todo handle error by creating setSelectedCityError action
-     */
     console.error(error);
     yield put({type: setSelectedCity.type, payload: null});
+    yield put({type: setError.type, payload: error.message});
   }
 }
 
@@ -57,11 +56,9 @@ function* fetchUsersCurrentLocationCityAndWeatherData(
     // get weather data from other generator
     yield* fetchCityWeatherData({type: '', payload: city});
   } catch (error) {
-    /**
-     * @todo handle error by creating setSelectedCityError action
-     */
     console.error(error);
     yield put({type: setSelectedCity.type, payload: null});
+    yield put({type: setError.type, payload: error.message});
   }
 }
 
