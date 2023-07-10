@@ -1,16 +1,24 @@
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
-import {Colors} from '../../theme';
+import {Colors, Metrics} from '../../theme';
 import ErrorHandlerUI from '../../Components/ErrorHandlerUI';
 import {requestForecastData} from '../../redux/features/forecast';
 import {ICity} from '../../ts/interfaces';
+import HourlyForecast from './Components/HourlyForecast';
 
 type HomeScreenProps = {};
 
 const HomeScreen: React.FC<HomeScreenProps> = () => {
   const dispatch = useDispatch();
+  const forecast = useSelector((state: RootState) => state.forecast);
   const {selectedCity, isLoading} = useSelector(
     (state: RootState) => state.location,
   );
@@ -26,7 +34,18 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
     <View style={styles.container}>
       {!isLoading ? (
         <ErrorHandlerUI>
-          <Text>{JSON.stringify(selectedCity)}</Text>
+          <ScrollView
+            contentContainerStyle={{paddingBottom: 100}}
+            style={{
+              paddingHorizontal: Metrics.spacing.l,
+              paddingTop: Metrics.spacing.l,
+            }}>
+            {forecast.error && <Text>{forecast.error}</Text>}
+
+            {!forecast.error && forecast.hourly && (
+              <HourlyForecast forecast={forecast.hourly} />
+            )}
+          </ScrollView>
         </ErrorHandlerUI>
       ) : (
         <ActivityIndicator size="large" color={Colors.PURPLE_PRIMARY} />
