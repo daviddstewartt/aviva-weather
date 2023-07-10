@@ -79,7 +79,7 @@ const BottomNavigationBar: React.FC<BottomNavigationBarProps> = ({
             name={
               isCurrentLocationSaved ? 'md-bookmark' : 'md-bookmark-outline'
             }
-            size={20}
+            size={30}
             color={
               !isCurrentLocationSaved ? Colors.LIGHT : Colors.PURPLE_PRIMARY
             }
