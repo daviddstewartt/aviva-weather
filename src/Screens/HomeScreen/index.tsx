@@ -1,18 +1,19 @@
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
-import {Colors, Metrics} from '../../theme';
-import ErrorHandlerUI from '../../Components/ErrorHandlerUI';
-import {requestForecastData} from '../../redux/features/forecast';
 import {ICity} from '../../ts/interfaces';
+
+// Redux
+import {RootState} from '../../redux/store';
+import {requestForecastData} from '../../redux/features/forecast';
+
+// Styles
+import {Colors, Metrics} from '../../theme';
+
+// Components
+import ErrorHandlerUI from '../../Components/ErrorHandlerUI';
 import HourlyForecast from './Components/HourlyForecast';
+import HomeForecastError from './Components/HomeForecastError';
 
 type HomeScreenProps = {};
 
@@ -40,7 +41,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
               paddingHorizontal: Metrics.spacing.l,
               paddingTop: Metrics.spacing.l,
             }}>
-            {forecast.error && <Text>{forecast.error}</Text>}
+            {forecast.error && <HomeForecastError error={forecast.error} />}
 
             {!forecast.error && forecast.hourly && (
               <HourlyForecast forecast={forecast.hourly} />
