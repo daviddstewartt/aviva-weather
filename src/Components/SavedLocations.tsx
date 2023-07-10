@@ -64,6 +64,9 @@ const SavedLocations: React.FC<SavedLocationsProps> = ({
     dispatch(setSelectedCity(city));
   };
 
+  const handleOrientation = (): boolean =>
+    savedCities.length > 1 ? !isListView : true;
+
   return (
     <View style={{width: '100%', flex: 1}}>
       <View style={styles.header}>
@@ -71,11 +74,13 @@ const SavedLocations: React.FC<SavedLocationsProps> = ({
           <Entype name="cross" size={30} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Saved Locations</Text>
-        <TouchableOpacity onPress={handleToggleListView}>
+        <TouchableOpacity
+          disabled={savedCities.length === 0}
+          onPress={handleToggleListView}>
           <MaterialCommunityIcons
             name={isListView ? 'view-carousel' : 'view-sequential'}
             size={30}
-            color="#fff"
+            color={savedCities.length === 0 ? Colors.LIGHT + '40' : '#fff'}
           />
         </TouchableOpacity>
       </View>
@@ -83,7 +88,7 @@ const SavedLocations: React.FC<SavedLocationsProps> = ({
       {/* List of saved Locations */}
       <FlatList
         data={savedCities}
-        horizontal={!isListView}
+        horizontal={handleOrientation()}
         showsHorizontalScrollIndicator={false}
         onScroll={handleHorizontalScroll}
         contentContainerStyle={styles.flatListContentContainer}
@@ -130,19 +135,18 @@ const SavedLocations: React.FC<SavedLocationsProps> = ({
           </View>
         )}
       />
-      {!isListView && (
+      {!isListView && savedCities.length > 0 && (
         <View style={styles.paginationContainer}>
-          {savedCities.length > 0 &&
-            savedCities.map((_, index) => (
-              <View
-                key={index}
-                style={{
-                  ...styles.paginationDot,
-                  backgroundColor:
-                    activeCityIndex === index ? '#fff' : '#ffffff30',
-                }}
-              />
-            ))}
+          {savedCities.map((_, index) => (
+            <View
+              key={index}
+              style={{
+                ...styles.paginationDot,
+                backgroundColor:
+                  activeCityIndex === index ? '#fff' : '#ffffff30',
+              }}
+            />
+          ))}
         </View>
       )}
     </View>
