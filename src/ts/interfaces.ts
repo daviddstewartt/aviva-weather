@@ -84,52 +84,80 @@ export interface IWeather {
 }
 
 /**
- * Weather Forecast - List Property from response from OpenWeatherMap API (16 day forecast)
- * https://openweathermap.org/forecast16
- * @interface IForecast
+ * Weather Forecast - Current Forecast  from OpenWeatherMap API (16 day forecast)
+ * https://openweathermap.org/api/one-call-3#data
+ * @interface IForecastCurrent
  */
-export interface IForecast {
+export interface IForecastCurrent {
+  clouds: number;
+  dew_point: number;
   dt: number;
+  feels_like: number;
+  humidity: number;
+  pressure: number;
   sunrise: number;
   sunset: number;
-  moonrise: number;
-  moonset: number;
-  moon_phase: number;
-  summary: string;
-  temp: {
-    day: number;
-    min: number;
-    max: number;
-    night: number;
-    eve: number;
-    morn: number;
-  };
-  feels_like: {
-    day: number;
-    night: number;
-    eve: number;
-    morn: number;
-  };
-  pressure: number;
-  humidity: number;
-  dew_point: number;
-  wind_speed: number;
-  wind_deg: number;
-  wind_gust: number;
+  temp: number;
+  uvi: number;
+  visibility: number;
   weather: {
     id: number;
     main: string;
     description: string;
     icon: string;
   }[];
-  clouds: number;
-  pop: number;
-  rain: number;
-  uvi: number;
+  wind_deg: number;
+  wind_gust: number;
+  wind_speed: number;
 }
 
-export interface IForecastDaily {}
+/**
+ * https://openweathermap.org/api/one-call-3#data
+ */
+export interface IForecastDaily {
+  dt: number;
+  sunrise: number;
+  sunset: number;
+  moonrise: number;
+  moonset: number;
+  moon_phase: number;
+  temp: {
+    morn: number;
+    day: number;
+    eve: number;
+    night: number;
+    min: number;
+    max: number;
+  };
+  feels_like: {
+    morn: number;
+    day: number;
+    eve: number;
+    night: number;
+  };
+  pressure: number;
+  humidity: number;
+  dew_point: number;
+  wind_speed: number;
+  wind_gust?: number;
+  wind_deg: number;
+  clouds: number;
+  uvi: number;
+  pop: number;
+  rain?: number;
+  snow?: number;
+  weather: {
+    id: number;
+    main: string;
 
+    description: string;
+    icon: string;
+  }[];
+}
+
+/**
+ * https://openweathermap.org/api/one-call-3#data
+ */
 export interface IForecastHourly {
   dt: number;
   temp: number;
@@ -158,13 +186,29 @@ export interface IForecastHourly {
   }[];
 }
 
+/**
+ * https://openweathermap.org/api/one-call-3#data
+ */
+export interface IForecastAlert {
+  sender_name: string;
+  event: string;
+  start: number;
+  end: number;
+  description: string;
+  tags: string[];
+}
+
+/**
+ * Result from OpenWeatherMap API One Call current and forecast data
+ * https://openweathermap.org/api/one-call-3#data
+ */
 export interface IForecastResponse {
-  // current: IForecast;
   lat: number;
   lon: number;
   timezone: string;
   timezone_offset: number;
+  current: IForecastCurrent;
   hourly: IForecastHourly[];
   daily: IForecastDaily[];
-  alerts: any[];
+  alerts: IForecastAlert[];
 }
