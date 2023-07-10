@@ -1,24 +1,28 @@
 import {configureStore} from '@reduxjs/toolkit';
 import createSagaMiddleware from 'redux-saga';
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  REGISTER,
+  REHYDRATE,
+  persistStore,
+} from 'redux-persist';
 import sagas from './sagas';
-
-// Reducers (if there were more i would combine reducers and import them here)
-import appReducer from './features/app';
-import locationReducer from './features/location';
-import layoutReducer from './features/layout';
-import forecastReducer from './features/forecast';
+import persistedReducer from './features';
 
 const sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
 
-const store = configureStore({
-  reducer: {
-    app: appReducer,
-    location: locationReducer,
-    forecast: forecastReducer,
-    layout: layoutReducer,
-  },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(middleware),
+export const store = configureStore({
+  reducer: persistedReducer,
+  // middleware: getDefaultMiddleware => getDefaultMiddleware({ignoredActions: }).concat(middleware),
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, REGISTER],
+      },
+    }).concat(middleware),
 });
 
 sagaMiddleware.run(sagas);
@@ -28,4 +32,4 @@ export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
 
-export {store};
+export const persistor = persistStore(store);
