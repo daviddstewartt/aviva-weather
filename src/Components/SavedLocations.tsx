@@ -91,7 +91,11 @@ const SavedLocations: React.FC<SavedLocationsProps> = ({
         horizontal={handleOrientation()}
         showsHorizontalScrollIndicator={false}
         onScroll={handleHorizontalScroll}
-        contentContainerStyle={styles.flatListContentContainer}
+        contentContainerStyle={
+          !isListView
+            ? styles.flatListContentContainer
+            : {flexDirection: 'column'}
+        }
         snapToAlignment="center"
         snapToInterval={width - Metrics.spacing.l}
         decelerationRate={'fast'}
