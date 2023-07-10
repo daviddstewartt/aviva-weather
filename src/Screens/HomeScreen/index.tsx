@@ -1,9 +1,9 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
 import {Colors} from '../../theme';
-import ErrorHandlerUI from './ErrorHandlerUI';
+import ErrorHandlerUI from '../../Components/ErrorHandlerUI';
 
 type HomeScreenProps = {};
 
@@ -14,15 +14,13 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Homescreen</Text>
-      <Text style={{marginTop: 260}}>Selected City: {selectedCity?.name}</Text>
-      <Text>isLoading: {isLoading.toString()}</Text>
-      {/* <Text>Current Location: {JSON.stringify(selectedCity)}</Text> */}
-      {/* <Text>{JSON.stringify(currentLocation)}</Text> */}
-
-      <ErrorHandlerUI>
-        <Text>Children</Text>
-      </ErrorHandlerUI>
+      {!isLoading ? (
+        <ErrorHandlerUI>
+          <Text>{JSON.stringify(selectedCity)}</Text>
+        </ErrorHandlerUI>
+      ) : (
+        <ActivityIndicator size="large" color={Colors.PURPLE_PRIMARY} />
+      )}
     </View>
   );
 };
@@ -33,5 +31,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.GREY,
+    paddingTop: 300,
   },
 });

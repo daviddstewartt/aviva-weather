@@ -2,13 +2,13 @@ import {Linking, StyleSheet} from 'react-native';
 import React, {Fragment, PropsWithChildren} from 'react';
 // Redux
 import {useSelector} from 'react-redux';
-import {RootState} from '../../redux/store';
+import {RootState} from '../redux/store';
 
 // Styles
-import {Colors} from '../../theme';
+import {Colors} from '../theme';
 
 // Components
-import Error from '../../Components/Error';
+import Error from './Error';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 const ErrorHandlerUI: React.FC<PropsWithChildren> = ({children}) => {
