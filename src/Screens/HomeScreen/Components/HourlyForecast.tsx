@@ -32,10 +32,10 @@ const HourlyForecast: React.FC<HourlyForecastProps> = ({forecast}) => {
         {/* Header */}
         <View style={styles.headerContainer}>
           <Text style={styles.headerDay}>
-            {timestampToShortDate(selectedForecast.dt)}
+            {timestampToShortDate(selectedForecast.dt * 1000)}
           </Text>
           <Text style={styles.headerDate}>
-            {formatTimestampToDate(selectedForecast.dt)}
+            {formatTimestampToDate(selectedForecast.dt * 1000)}
           </Text>
         </View>
 
