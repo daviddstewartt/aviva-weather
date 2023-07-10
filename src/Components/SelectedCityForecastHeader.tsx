@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {ICity} from '../ts/interfaces';
 import {formatTime} from '../util/datetime';
@@ -9,6 +9,7 @@ import {RootState} from '../redux/store';
 import {requestSelectedCityWeather} from '../redux/features/location';
 
 // Styles & Icons
+import styles from './styles/SelectedCityForecastHeader';
 import {Colors, Fonts, Metrics} from '../theme';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -102,40 +103,3 @@ const SelectedCityForecastHeader: React.FC<
 };
 
 export default SelectedCityForecastHeader;
-
-const styles = StyleSheet.create({
-  headerContainer: {
-    width: '100%',
-    paddingHorizontal: Metrics.spacing.l,
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: Metrics.spacing.m,
-    alignSelf: 'center',
-  },
-  locationTitle: {
-    fontSize: Fonts.size.l,
-    color: Colors.TEXT_LIGHT,
-  },
-  weatherDesc: {
-    color: Colors.TEXT_LIGHT,
-    marginBottom: Metrics.spacing.s,
-  },
-  currentWeatherContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginRight: Metrics.spacing.m,
-  },
-  currentTemp: {
-    fontSize: Fonts.size.m,
-    color: Colors.TEXT_LIGHT,
-  },
-  minMaxTempContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'flex-start',
-    justifyContent: 'flex-start',
-    paddingVertical: Metrics.spacing.s,
-    paddingHorizontal: Metrics.spacing.m,
-    borderRadius: Metrics.radius.circle,
-  },
-});

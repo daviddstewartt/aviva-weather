@@ -1,6 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Text, View} from 'react-native';
 import React from 'react';
 
+// Styles
+import styles from './styles/Error';
 import {Colors, Metrics} from '../theme';
 
 // Components
@@ -46,22 +48,3 @@ const Error: React.FC<ErrorProps> = ({
 };
 
 export default Error;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  errorHeading: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: Metrics.spacing.m,
-    color: Colors.TEXT_LIGHT,
-  },
-  errorText: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: Colors.LIGHT_GREY,
-  },
-});

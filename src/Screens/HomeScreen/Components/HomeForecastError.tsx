@@ -1,7 +1,8 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import ForecastError from '../../ForecastScreen/Components/ForecastError';
+
 import {Colors, Metrics} from '../../../theme';
+import ForecastError from '../../ForecastScreen/Components/ForecastError';
 
 type HomeForecastErrorProps = {
   error: string;

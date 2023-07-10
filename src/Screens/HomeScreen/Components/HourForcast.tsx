@@ -1,11 +1,16 @@
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import React from 'react';
+import {mainToColourGradient} from '../../../data/Weather';
 import {IForecastHourly} from '../../../ts/interfaces';
 import {formatTime} from '../../../util/datetime';
+
+// Styles
+import styles from './styles/HourForecast';
+import {Colors, Metrics} from '../../../theme';
+
+// Components
 import WeatherIcon from '../../../Components/WeatherIcon';
-import {Colors, Fonts, Metrics} from '../../../theme';
 import LinearGradient from 'react-native-linear-gradient';
-import {mainToColourGradient} from '../../../data/Weather';
 
 type HourForcastProps = {
   active: boolean;
@@ -42,22 +47,3 @@ const HourForcast: React.FC<HourForcastProps> = ({
 };
 
 export default HourForcast;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: Metrics.spacing.m,
-  },
-  forecastTime: {
-    color: Colors.TEXT_LIGHT,
-    fontSize: Fonts.size.m,
-  },
-  forecastTemp: {
-    // color: Colors.PURPLE_PRIMARY,
-    color: Colors.LIGHT_GREY,
-    fontWeight: 'bold',
-    fontSize: 24,
-  },
-});

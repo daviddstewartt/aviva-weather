@@ -1,9 +1,10 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {IForecastCurrent} from '../../../ts/interfaces';
-import Tile, {Tile as TileType} from './Tile';
-import {Metrics} from '../../../theme';
 import {metersToMiles} from '../../../util/units';
+import {IForecastCurrent} from '../../../ts/interfaces';
+
+import {Metrics} from '../../../theme';
+import Tile, {Tile as TileType} from './Tile';
 
 type CurrentForecastTilesProps = {
   forecast: IForecastCurrent;

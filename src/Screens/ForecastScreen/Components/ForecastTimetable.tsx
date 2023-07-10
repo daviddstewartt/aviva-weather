@@ -1,7 +1,12 @@
-import {StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {Text, View, ViewStyle} from 'react-native';
 import React from 'react';
 import {IForecastDaily} from '../../../ts/interfaces';
-import {Colors, Fonts, Metrics} from '../../../theme';
+
+// Styles
+import styles from './styles/ForecastTimetable';
+import {Colors, Metrics} from '../../../theme';
+
+// Components
 import TimetableRowItem from './TimetableRowItem';
 
 type ForecastTimetableProps = {
@@ -44,21 +49,3 @@ const ForecastTimetable: React.FC<ForecastTimetableProps> = ({
 };
 
 export default ForecastTimetable;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.SPACE_GREY_PRIMARY + '80',
-    borderRadius: Metrics.radius.rounded2,
-    paddingBottom: Metrics.spacing.m,
-  },
-  headerContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: Metrics.spacing.l,
-    paddingVertical: Metrics.spacing.m,
-  },
-  headerTitle: {
-    color: Colors.TEXT_LIGHT,
-    fontSize: Fonts.size.m,
-    fontWeight: 'bold',
-  },
-});

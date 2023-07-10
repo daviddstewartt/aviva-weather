@@ -1,10 +1,13 @@
-import {StyleSheet, View} from 'react-native';
+import {View} from 'react-native';
 import React, {Fragment, useState} from 'react';
 import {mainToColourGradient} from '../data/Weather';
 
 // Redux
 import {useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
+
+// styles
+import styles from './styles/NavigationOverlay';
 
 // Components
 import ForecastToggle from './ForecastToggle';
@@ -96,31 +99,3 @@ ForecastToggleOverlay.defaultProps = {
 };
 
 export default ForecastToggleOverlay;
-
-const styles = StyleSheet.create({
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    flexDirection: 'column',
-    flex: 1,
-    justifyContent: 'space-between',
-    pointerEvents: 'box-none',
-  },
-  gradient: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: 320,
-    alignItems: 'center',
-    flexDirection: 'column',
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-});

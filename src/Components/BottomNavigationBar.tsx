@@ -1,14 +1,18 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
+import {requestLocationPermission} from './LocationPermissionsWrapper';
+
+// Redux
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../redux/store';
+import {addCityToSaved, removeCityFromSaved} from '../redux/features/location';
 
 // Styles & Icons
 import {Colors, Metrics} from '../theme';
+
+// Components
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {addCityToSaved, removeCityFromSaved} from '../redux/features/location';
-import {requestLocationPermission} from './LocationPermissionsWrapper';
 import LinearGradient from 'react-native-linear-gradient';
 
 type BottomNavigationBarProps = {

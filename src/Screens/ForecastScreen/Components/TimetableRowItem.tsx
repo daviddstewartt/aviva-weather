@@ -1,10 +1,15 @@
-import {StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {Text, View, ViewStyle} from 'react-native';
 import React from 'react';
 import {IForecastDaily} from '../../../ts/interfaces';
 import {timestampToShortDate} from '../../../util/datetime';
-import {Colors, Metrics} from '../../../theme';
+
+// Components
 import WeatherIcon from '../../../Components/WeatherIcon';
 import WeatherOverviewPill from '../../HomeScreen/Components/WeatherOverviewPill';
+
+// Styles
+import styles from './styles/TimetableRowItem';
+import {Colors, Metrics} from '../../../theme';
 
 type TimetableRowItemProps = {
   day: IForecastDaily;
@@ -46,28 +51,3 @@ const TimetableRowItem: React.FC<TimetableRowItemProps> = ({day, style}) => {
 };
 
 export default TimetableRowItem;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    paddingVertical: Metrics.spacing.m,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  date: {
-    color: Colors.TEXT_LIGHT,
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  desc: {
-    color: Colors.LIGHT_GREY,
-    fontSize: 16,
-  },
-  hiloText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});

@@ -1,4 +1,4 @@
-import {Linking, StyleSheet} from 'react-native';
+import {Linking} from 'react-native';
 import React, {Fragment, PropsWithChildren} from 'react';
 // Redux
 import {useSelector} from 'react-redux';

@@ -1,6 +1,7 @@
-import {StyleSheet, Text, View, ViewStyle} from 'react-native';
+import {Text, View, ViewStyle} from 'react-native';
 import React from 'react';
-import {Colors, Metrics} from '../../../theme';
+import styles from './styles/WeatherOverviewPill';
+import {Colors} from '../../../theme';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 type WeatherOverviewPillProps = {
@@ -35,26 +36,3 @@ const WeatherOverviewPill: React.FC<WeatherOverviewPillProps> = ({
 };
 
 export default WeatherOverviewPill;
-
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.SPACE_GREY_PRIMARY + '80',
-    borderRadius: Metrics.radius.circle,
-    paddingVertical: Metrics.spacing.m,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  pillItem: {
-    flex: 1,
-    flexDirection: 'row',
-    textAlign: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  pillText: {
-    marginLeft: Metrics.spacing.m,
-    fontWeight: 'bold',
-    color: Colors.LIGHT,
-  },
-});

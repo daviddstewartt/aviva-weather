@@ -5,6 +5,7 @@ import {
   timestampToShortDate,
 } from '../../../util/datetime';
 import {IForecastHourly} from '../../../ts/interfaces';
+
 import {Colors, Fonts, Metrics} from '../../../theme';
 import HourForcast from './HourForcast';
 import WeatherOverviewPill from './WeatherOverviewPill';

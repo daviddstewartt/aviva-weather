@@ -1,6 +1,5 @@
 import {
   ActivityIndicator,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -19,6 +18,7 @@ import {requestSelectedCityWeather} from '../redux/features/location';
 import {ICity} from '../ts/interfaces';
 
 // Styles & Icons
+import styles from './styles/SearchLocationInput';
 import {Colors, Metrics} from '../theme';
 import Entype from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -193,45 +193,3 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
 };
 
 export default SearchLocationsInput;
-
-const styles = StyleSheet.create({
-  searchContainer: {
-    width: '100%',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  inputContainer: {
-    width: '90%',
-    height: 50,
-    paddingHorizontal: 20,
-
-    flexDirection: 'row',
-  },
-  input: {
-    flex: 1,
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: Colors.TEXT_LIGHT,
-  },
-  searchResultsContainer: {
-    width: '90%',
-    marginTop: Metrics.spacing.l,
-    flexDirection: 'column',
-  },
-  searchResultItem: {
-    width: '100%',
-    paddingVertical: Metrics.spacing.l,
-    borderBottomColor: Colors.PURPLE_SECONDARY,
-    borderBottomWidth: 1,
-  },
-  searchResultItemText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  errorText: {
-    color: Colors.LIGHT_GREY,
-    marginTop: Metrics.spacing.m,
-    fontSize: 16,
-  },
-});
