@@ -29,7 +29,7 @@ const ForecastScreen: React.FC<ForecastScreenProps> = () => {
               paddingHorizontal: Metrics.spacing.l,
               paddingTop: Metrics.spacing.l,
             }}>
-            {forecast.error && <ForecastError />}
+            {forecast.error && <ForecastError error={forecast.error} />}
 
             {!forecast.error && forecast.daily && (
               <ForecastTimetable

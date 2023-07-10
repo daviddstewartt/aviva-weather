@@ -1,14 +1,18 @@
 import {all, takeLatest, call, put} from 'redux-saga/effects';
 import {PayloadAction} from '@reduxjs/toolkit';
-import {requestForecastData, setForecast, setError} from '../features/forecast';
+import {
+  requestForecastData,
+  setForecast,
+  setError,
+  setIsLoading,
+} from '../features/forecast';
 import {getCityForecast} from '../../util/forecast';
 import {ICity} from '../../ts/interfaces';
 import {Config} from '../../../config';
 
 function* fetchCityForecastData(action: PayloadAction<ICity>) {
-  console.log('fetchCityForecastData');
-
   try {
+    yield put(setIsLoading(true));
     const cityForecastData = yield call(
       getCityForecast,
       action.payload,
