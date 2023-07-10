@@ -9,12 +9,9 @@ const forecastSlice = createSlice({
   reducers: {
     requestForecastData: (state, action: PayloadAction<ICity>) => {}, //Action for saga to listen to
     setForecast: (state, action: PayloadAction<IForecastResponse>) => {
-      state = {
-        ...state,
-        hourly: action.payload.hourly,
-        daily: action.payload.daily,
-        isLoading: false,
-      };
+      state.hourly = action.payload.hourly;
+      state.daily = action.payload.daily;
+      state.isLoading = false;
     },
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;
