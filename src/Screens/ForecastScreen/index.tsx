@@ -1,62 +1,44 @@
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import {Config} from '../../../config';
-import {IForecast} from '../../ts/interfaces';
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React from 'react';
 
 // Redux
 import {useSelector} from 'react-redux';
 import {RootState} from '../../redux/store';
-import {getSelectedCityForecast} from '../../util/location';
 
 // Styles
-import {Colors} from '../../theme';
+import {Colors, Metrics} from '../../theme';
 
 // Components
 import ErrorHandlerUI from '../../Components/ErrorHandlerUI';
+import HourlyForecast from '../HomeScreen/Components/HourlyForecast';
 
 type ForecastScreenProps = {};
 
 const ForecastScreen: React.FC<ForecastScreenProps> = () => {
-  const {selectedCity, isLoading} = useSelector(
-    (state: RootState) => state.location,
-  );
-  const [forecast, setForecast] = useState<IForecast | null>(null);
-  const [isForecastLoading, setIsForecastLoading] = useState<boolean>(false);
-  const [forecastError, setForecastError] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (selectedCity) {
-      // get forecast data
-      const fetchWeatherForecast = async () => {
-        setIsForecastLoading(true);
-        try {
-          const selectedForecast = await getSelectedCityForecast(
-            Config.OPEN_WEATHER_MAP_API_KEY,
-          );
-          setForecast(selectedForecast);
-          setIsForecastLoading(false);
-          setForecastError(null);
-        } catch (error) {
-          console.log('error fetching forecast', error);
-          setIsForecastLoading(false);
-          setForecastError(error.message);
-        }
-      };
-
-      fetchWeatherForecast();
-    }
-  }, [selectedCity]);
+  const location = useSelector((state: RootState) => state.location);
+  const forecast = useSelector((state: RootState) => state.forecast);
 
   return (
     <View style={styles.container}>
-      {!(isLoading || isForecastLoading) ? (
+      {!(location.isLoading || forecast.isLoading) ? (
         <ErrorHandlerUI>
-          <Text>forecast</Text>
-          {forecastError && <Text>{forecastError}</Text>}
+          <ScrollView
+            style={{
+              paddingHorizontal: Metrics.spacing.l,
+              paddingTop: Metrics.spacing.l,
+            }}>
+            {forecast.error && <Text>{forecast.error}</Text>}
 
-          {!forecastError && forecast && (
-            <Text>{JSON.stringify(forecast)}</Text>
-          )}
+            {!forecast.error && forecast.hourly && (
+              <HourlyForecast forecast={forecast.hourly} />
+            )}
+          </ScrollView>
         </ErrorHandlerUI>
       ) : (
         <ActivityIndicator size="large" color={Colors.PURPLE_PRIMARY} />
