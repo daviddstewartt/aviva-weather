@@ -1,5 +1,5 @@
 import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native';
-import React, {useEffect} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {ICity} from '../../ts/interfaces';
 
@@ -14,6 +14,7 @@ import {Colors, Metrics} from '../../theme';
 import ErrorHandlerUI from '../../Components/ErrorHandlerUI';
 import HourlyForecast from './Components/HourlyForecast';
 import HomeForecastError from './Components/HomeForecastError';
+import CurrentForecastTiles from './Components/CurrentForecastTiles';
 
 type HomeScreenProps = {};
 
@@ -43,8 +44,15 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
             }}>
             {forecast.error && <HomeForecastError error={forecast.error} />}
 
-            {!forecast.error && forecast.hourly && (
-              <HourlyForecast forecast={forecast.hourly} />
+            {!forecast.error && (
+              <Fragment>
+                {forecast.hourly && (
+                  <HourlyForecast forecast={forecast.hourly} />
+                )}
+                {forecast.current && (
+                  <CurrentForecastTiles forecast={forecast.current} />
+                )}
+              </Fragment>
             )}
           </ScrollView>
         </ErrorHandlerUI>
