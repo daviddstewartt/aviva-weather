@@ -1,10 +1,4 @@
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native';
 import React from 'react';
 
 // Redux
@@ -16,7 +10,8 @@ import {Colors, Metrics} from '../../theme';
 
 // Components
 import ErrorHandlerUI from '../../Components/ErrorHandlerUI';
-import HourlyForecast from '../HomeScreen/Components/HourlyForecast';
+import ForecastTimetable from './Components/ForecastTimetable';
+import ForecastError from './Components/ForecastError';
 
 type ForecastScreenProps = {};
 
@@ -29,14 +24,18 @@ const ForecastScreen: React.FC<ForecastScreenProps> = () => {
       {!(location.isLoading || forecast.isLoading) ? (
         <ErrorHandlerUI>
           <ScrollView
+            contentContainerStyle={{paddingBottom: 100}}
             style={{
               paddingHorizontal: Metrics.spacing.l,
               paddingTop: Metrics.spacing.l,
             }}>
-            {forecast.error && <Text>{forecast.error}</Text>}
+            {forecast.error && <ForecastError />}
 
-            {!forecast.error && forecast.hourly && (
-              <HourlyForecast forecast={forecast.hourly} />
+            {!forecast.error && forecast.daily && (
+              <ForecastTimetable
+                forecast={forecast.daily}
+                style={{marginTop: Metrics.spacing.m}}
+              />
             )}
           </ScrollView>
         </ErrorHandlerUI>
