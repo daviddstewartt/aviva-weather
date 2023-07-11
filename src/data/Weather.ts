@@ -1,23 +1,63 @@
-// const codesToVectorIcons = {
-//   '01d': 'weather-sunny',
-//   '01n': 'weather-night',
-//   '02d': 'weather-partlycloudy',
-//   '02n': 'weather-partlycloudy',
-//   '03d': 'weather-cloudy',
-//   '03n': 'weather-cloudy',
-//   '04d': 'weather-cloudy',
-//   '04n': 'weather-cloudy',
-//   '09d': 'weather-pouring',
-//   '09n': 'weather-pouring',
-//   '10d': 'weather-rainy',
-//   '10n': 'weather-rainy',
-//   '11d': 'weather-lightning',
-//   '11n': 'weather-lightning',
-//   '13d': 'weather-snowy',
-//   '13n': 'weather-snowy',
-//   '50d': 'weather-fog',
-//   '50n': 'weather-fog',
-// };
+const IconIdToVectorIconName = (icon: string, id?: string): string => {
+  switch (icon) {
+    case '01d':
+      return 'weather-sunny';
+    case '01n':
+      return 'weather-night';
+    case '02d':
+      return 'weather-partly-cloudy';
+    case '02n':
+      return 'weather-night-partly-cloudy';
+    case '03d':
+      return 'weather-cloudy';
+    case '03n':
+      return 'weather-cloudy';
+    case '04d':
+      return 'weather-cloudy';
+    case '04n':
+      return 'weather-cloudy';
+    case '09d':
+      return 'weather-pouring';
+    case '09n':
+      return 'weather-pouring';
+    case '10d':
+      return 'weather-rainy';
+    case '10n':
+      return 'weather-rainy';
+    case '11d':
+      if (id && ['200', '201', '202', '230', '231', '232'].includes(id)) {
+        return 'weather-lightning-rainy';
+      }
+      return 'weather-lightning';
+    case '11n':
+      if (id && ['200', '201', '202', '230', '231', '232'].includes(id)) {
+        return 'weather-lightning-rainy';
+      }
+      return 'weather-lightning';
+    case '13d':
+      if (id && ['602'].includes(id)) {
+        return 'weather-snowy-heavy';
+      }
+      if (id && ['615', '616'].includes(id)) {
+        return 'weather-snowy-rainy';
+      }
+      return 'weather-snowy';
+    case '13n':
+      if (id && ['602'].includes(id)) {
+        return 'weather-snowy-heavy';
+      }
+      if (id && ['615', '616'].includes(id)) {
+        return 'weather-snowy-rainy';
+      }
+      return 'weather-snowy';
+    case '50d':
+      return 'weather-fog';
+    case '50n':
+      return 'weather-fog';
+    default:
+      return 'weather-cloudy';
+  }
+};
 
 export type WeatherColourGradient = {
   gradient: string[];
@@ -86,4 +126,4 @@ const mainToColourGradient = (
   }
 };
 
-export {mainToColourGradient};
+export {mainToColourGradient, IconIdToVectorIconName};
