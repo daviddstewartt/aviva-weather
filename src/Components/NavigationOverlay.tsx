@@ -1,13 +1,18 @@
-import {View} from 'react-native';
-import React, {Fragment, useState} from 'react';
+import {TouchableOpacity, View} from 'react-native';
+import React, {Fragment} from 'react';
 import {mainToColourGradient} from '../data/Weather';
 
 // Redux
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {RootState} from '../redux/store';
+import {
+  setShowForecastToggle,
+  setShowSavedLocations,
+} from '../redux/features/layout';
 
-// styles
+// styles & Icons
 import styles from './styles/NavigationOverlay';
+import Entype from 'react-native-vector-icons/Entypo';
 
 // Components
 import ForecastToggle from './ForecastToggle';
@@ -24,22 +29,16 @@ type ForecastToggleOverlayProps = {
 const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
   currentRoute,
 }) => {
+  const dispatch = useDispatch();
+  const {showSavedLocations, showForecastToggle} = useSelector(
+    (state: RootState) => state.layout,
+  );
   const mainWeatherCondition = useSelector(
     (state: RootState) => state.location.selectedCity?.weather.weather[0].main,
   );
-  const [showForecastToggle, setShowForecastToggle] = useState<boolean>(true);
-  const [showSavedLocations, setShowSavedLocations] = useState<boolean>(false);
 
   return (
-    <View
-      pointerEvents={'box-none'}
-      style={[
-        styles.overlay,
-        {
-          backgroundColor:
-            !showForecastToggle || showSavedLocations ? '#00000080' : undefined,
-        },
-      ]}>
+    <Fragment>
       <LinearGradient
         pointerEvents={'auto'}
         colors={
@@ -53,44 +52,61 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
         style={styles.gradient}
       />
 
-      {showForecastToggle && !showSavedLocations && (
-        <SelectedCityForecastHeader />
-      )}
-      <View style={{alignItems: 'center', width: '100%', flex: 1}}>
+      <View
+        style={[
+          styles.headerContainer,
+          {
+            height: showForecastToggle ? 'auto' : '100%',
+            backgroundColor: showForecastToggle ? 'transparent' : '#00000080',
+          },
+        ]}>
         {!showSavedLocations && (
-          <Fragment>
-            <SearchLocationsInput
-              onSearchResultsVisibility={visible =>
-                setShowForecastToggle(!visible)
-              }
-            />
-            {showForecastToggle && (
-              <ForecastToggle currentRoute={currentRoute} />
-            )}
-          </Fragment>
+          <SelectedCityForecastHeader showRefresh={showForecastToggle} />
         )}
 
-        {/* Saved Locations Overlay */}
-        {showSavedLocations && (
-          <SavedLocations
-            onClose={() => setShowSavedLocations(false)}
-            onShowSearchLocation={() => {
-              setShowSavedLocations(false);
-              setShowForecastToggle(!showForecastToggle);
-            }}
+        {!showSavedLocations && showForecastToggle && (
+          <ForecastToggle currentRoute={currentRoute} />
+        )}
+
+        {!showSavedLocations && (
+          <SearchLocationsInput
+            onSearchResultsVisibility={visible =>
+              dispatch(setShowForecastToggle(!visible))
+            }
           />
+        )}
+
+        {/* Close search button */}
+        {!showSavedLocations && !showForecastToggle && (
+          <TouchableOpacity
+            style={styles.searchCloseButton}
+            onPress={() =>
+              dispatch(setShowForecastToggle(!showForecastToggle))
+            }>
+            <Entype name="cross" size={30} color="#fff" />
+          </TouchableOpacity>
         )}
       </View>
 
-      {/* Save Locations Overlay Toggle */}
-      {showForecastToggle && !showSavedLocations && (
+      {/* Saved Locations Overlay */}
+      {showSavedLocations && (
+        <SavedLocations
+          onClose={() => dispatch(setShowSavedLocations(false))}
+          onShowSearchLocation={() => {
+            dispatch(setShowSavedLocations(false));
+            dispatch(setShowForecastToggle(!showForecastToggle));
+          }}
+        />
+      )}
+
+      {!showSavedLocations && showForecastToggle && (
         <BottomNavigationBar
           onShowSavedLocations={() =>
-            setShowSavedLocations(!showSavedLocations)
+            dispatch(setShowSavedLocations(!showSavedLocations))
           }
         />
       )}
-    </View>
+    </Fragment>
   );
 };
 

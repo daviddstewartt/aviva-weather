@@ -15,11 +15,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 // Components
 import LinearGradient from 'react-native-linear-gradient';
 
-type SelectedCityForecastHeaderProps = {};
+type SelectedCityForecastHeaderProps = {
+  showRefresh?: boolean;
+};
 
-const SelectedCityForecastHeader: React.FC<
-  SelectedCityForecastHeaderProps
-> = () => {
+const SelectedCityForecastHeader: React.FC<SelectedCityForecastHeaderProps> = ({
+  showRefresh,
+}) => {
   const dispatch = useDispatch();
   const {selectedCity, isLoading, permissionsGranted} = useSelector(
     (state: RootState) => state.location,
@@ -60,7 +62,7 @@ const SelectedCityForecastHeader: React.FC<
                 <Text style={styles.text}>Loading...</Text>
               </View>
             )}
-            {!permissionsGranted && (
+            {permissionsGranted && (
               <View style={styles.locationPermissionContainer}>
                 <View style={styles.dot} />
                 <Text style={styles.locationPermissionText}>
@@ -69,12 +71,18 @@ const SelectedCityForecastHeader: React.FC<
               </View>
             )}
           </View>
-          <TouchableOpacity
-            disabled={isLoading || !selectedCity}
-            onPress={handleRefreshLocationData}
-            style={styles.refreshButton}>
-            <Ionicons name={'md-refresh'} size={20} color={Colors.TEXT_LIGHT} />
-          </TouchableOpacity>
+          {showRefresh && (
+            <TouchableOpacity
+              disabled={isLoading || !selectedCity}
+              onPress={handleRefreshLocationData}
+              style={styles.refreshButton}>
+              <Ionicons
+                name={'md-refresh'}
+                size={20}
+                color={Colors.TEXT_LIGHT}
+              />
+            </TouchableOpacity>
+          )}
         </View>
       </LinearGradient>
     </View>

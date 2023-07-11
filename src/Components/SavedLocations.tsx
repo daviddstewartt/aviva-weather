@@ -63,7 +63,15 @@ const SavedLocations: React.FC<SavedLocationsProps> = ({
     savedCities.length > 1 ? !isListView : true;
 
   return (
-    <View style={{width: '100%', flex: 1}}>
+    <View
+      style={{
+        position: 'absolute',
+        top: 0,
+        width: '100%',
+        height: '100%',
+        flex: 1,
+        backgroundColor: Colors.DARK + '80',
+      }}>
       <View style={styles.header}>
         <TouchableOpacity onPress={onClose}>
           <Entype name="cross" size={30} color="#fff" />

@@ -10,7 +10,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Config} from '../../config';
 
 // Redux
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {searchLocationCities} from '../util/location';
 import {requestSelectedCityWeather} from '../redux/features/location';
 
@@ -25,6 +25,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // Components
 import LinearGradient from 'react-native-linear-gradient';
+import {RootState} from '../redux/store';
 
 type SearchLocationsInputProps = {
   onSearchResultsVisibility: (visible: boolean) => void;
@@ -35,6 +36,9 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
 }) => {
   const dispatch = useDispatch();
   const inputRef = useRef<TextInput>(null);
+  const isForecastNavShowing = useSelector(
+    (state: RootState) => state.layout.showForecastToggle,
+  );
   const [citiesList, setCitiesList] = useState<ICity[]>([]);
   const [isSearchLoading, setIsSearchLoading] = useState<boolean>(false);
   const [showCitiesList, setShowCitiesList] = useState<boolean>(false);
@@ -55,6 +59,13 @@ const SearchLocationsInput: React.FC<SearchLocationsInputProps> = ({
       clearTimeout(searchTimeoutId);
     };
   }, [searchLocationString]);
+
+  // Check if forecast button is show (this means no overlay is shown)
+  useEffect(() => {
+    if (isForecastNavShowing) {
+      resetSearchState();
+    }
+  }, [isForecastNavShowing]);
 
   /**
    * Gets the list of cities from the OpenWeatherMap API

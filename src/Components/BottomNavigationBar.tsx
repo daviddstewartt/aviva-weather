@@ -55,7 +55,8 @@ const BottomNavigationBar: React.FC<BottomNavigationBarProps> = ({
     <LinearGradient
       colors={[Colors.SPACE_GREY_PRIMARY, 'transparent']}
       start={{x: 0, y: 1}}
-      end={{x: 0, y: 0}}>
+      end={{x: 0, y: 0}}
+      style={styles.container}>
       <View style={styles.bottomNavContainer}>
         {/* This button will change to current location */}
 
@@ -97,8 +98,13 @@ const BottomNavigationBar: React.FC<BottomNavigationBarProps> = ({
 export default BottomNavigationBar;
 
 const styles = StyleSheet.create({
-  bottomNavContainer: {
+  container: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
     width: '100%',
+  },
+  bottomNavContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',

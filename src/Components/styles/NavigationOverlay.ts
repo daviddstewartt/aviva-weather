@@ -1,6 +1,13 @@
 import {StyleSheet} from 'react-native';
+import {Metrics} from '../../theme';
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    alignItems: 'center',
+  },
   overlay: {
     position: 'absolute',
     top: 0,
@@ -14,6 +21,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
     pointerEvents: 'box-none',
+  },
+  searchCloseButton: {
+    position: 'absolute',
+    top: Metrics.spacing.l,
+    right: Metrics.spacing.m,
   },
   gradient: {
     position: 'absolute',
