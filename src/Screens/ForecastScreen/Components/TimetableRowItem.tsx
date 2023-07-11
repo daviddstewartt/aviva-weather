@@ -27,7 +27,9 @@ const TimetableRowItem: React.FC<TimetableRowItemProps> = ({day, style}) => {
         <View style={styles.row}>
           <WeatherIcon icon={day.weather[0].icon} />
           <View style={{marginLeft: Metrics.spacing.s}}>
-            <Text style={styles.date}>{timestampToShortDate(day.dt)}</Text>
+            <Text style={styles.date}>
+              {timestampToShortDate(day.dt * 1000)}
+            </Text>
             <Text style={styles.desc}>{day.weather[0].description}</Text>
           </View>
         </View>
