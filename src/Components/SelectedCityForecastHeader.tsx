@@ -1,7 +1,6 @@
 import {Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {ICity} from '../ts/interfaces';
-import {formatTime} from '../util/datetime';
 
 // Redux
 import {useDispatch, useSelector} from 'react-redux';
@@ -10,10 +9,8 @@ import {requestSelectedCityWeather} from '../redux/features/location';
 
 // Styles & Icons
 import styles from './styles/SelectedCityForecastHeader';
-import {Colors, Fonts, Metrics} from '../theme';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {Colors} from '../theme';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import WeatherIcon from './WeatherIcon';
 
 // Components
 import LinearGradient from 'react-native-linear-gradient';
@@ -24,7 +21,9 @@ const SelectedCityForecastHeader: React.FC<
   SelectedCityForecastHeaderProps
 > = () => {
   const dispatch = useDispatch();
-  const {selectedCity} = useSelector((state: RootState) => state.location);
+  const {selectedCity, isLoading, permissionsGranted} = useSelector(
+    (state: RootState) => state.location,
+  );
 
   const handleRefreshLocationData = () => {
     dispatch(requestSelectedCityWeather(selectedCity as ICity));
@@ -32,72 +31,52 @@ const SelectedCityForecastHeader: React.FC<
 
   return selectedCity ? (
     <View style={{width: '100%'}}>
-      <View style={styles.headerContainer}>
-        {/* Current Weather icon ontop of Current Temp */}
-        <View style={styles.currentWeatherContainer}>
-          <WeatherIcon
-            icon={selectedCity.weather.weather[0].icon}
-            height={100}
-            width={100}
-          />
-          <Text style={styles.currentTemp}>
-            {selectedCity.weather.main.temp || '-'}°C
-          </Text>
-        </View>
-
-        {/* Basic Location Data */}
-        <View style={{flex: 1, flexDirection: 'column'}}>
-          <Text
-            numberOfLines={2}
-            ellipsizeMode={'tail'}
-            style={styles.locationTitle}>
-            {selectedCity.name || '---'}
-          </Text>
-          <Text style={styles.weatherDesc}>
-            {selectedCity?.weather.weather[0].description || '---'}
-          </Text>
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
-            <LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              colors={[
-                Colors.SPACE_GREY_PRIMARY + '90',
-                Colors.SPACE_GREY_SECONDARY,
-              ]}
-              style={{borderRadius: Metrics.radius.circle}}>
-              <View style={styles.minMaxTempContainer}>
-                <FontAwesome5
-                  name={'temperature-high'}
-                  size={16}
-                  color={Colors.PURPLE_PRIMARY}
-                />
-                <Text
-                  style={{
-                    color: Colors.PURPLE_PRIMARY,
-                    marginLeft: Metrics.spacing.m,
-                  }}>
-                  {selectedCity?.weather.main.temp_min}°C /{' '}
-                  {selectedCity?.weather.main.temp_max}°C
+      <LinearGradient
+        start={{x: 0, y: 0}}
+        end={{x: 0, y: 1}}
+        colors={['#00000050', 'transparent']}>
+        <View style={styles.headerContainer}>
+          <View
+            style={{flex: 1, alignItems: 'center', flexDirection: 'column'}}>
+            {selectedCity && (
+              <View style={styles.locationContainer}>
+                <View style={styles.titleContainer}>
+                  <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    style={[styles.text, styles.title]}>
+                    {selectedCity.name}
+                  </Text>
+                </View>
+                <View style={styles.degContainer}>
+                  <Text style={[styles.text]}>
+                    {parseInt(selectedCity.weather.main.temp.toString(), 10)}°
+                  </Text>
+                </View>
+              </View>
+            )}
+            {!selectedCity && isLoading && (
+              <View style={styles.locationContainer}>
+                <Text style={styles.text}>Loading...</Text>
+              </View>
+            )}
+            {!permissionsGranted && (
+              <View style={styles.locationPermissionContainer}>
+                <View style={styles.dot} />
+                <Text style={styles.locationPermissionText}>
+                  Turn on location services
                 </Text>
               </View>
-            </LinearGradient>
-            {selectedCity && (
-              <TouchableOpacity
-                onPress={handleRefreshLocationData}
-                style={{marginLeft: Metrics.spacing.m}}>
-                <Ionicons
-                  name={'md-refresh'}
-                  size={20}
-                  color={Colors.TEXT_LIGHT}
-                />
-              </TouchableOpacity>
             )}
           </View>
-          <Text style={{fontSize: Fonts.size.xs}}>
-            Last updated: {formatTime(selectedCity?.timestamp)}
-          </Text>
+          <TouchableOpacity
+            disabled={isLoading || !selectedCity}
+            onPress={handleRefreshLocationData}
+            style={styles.refreshButton}>
+            <Ionicons name={'md-refresh'} size={20} color={Colors.TEXT_LIGHT} />
+          </TouchableOpacity>
         </View>
-      </View>
+      </LinearGradient>
     </View>
   ) : null;
 };
