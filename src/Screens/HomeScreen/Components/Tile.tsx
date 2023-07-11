@@ -5,6 +5,7 @@ import styles from './styles/Tile';
 export type Tile = {
   title: string;
   value: string | number;
+  icon?: React.ReactNode;
   symbol?: string;
   desc?: string;
   component?: React.ReactNode;
@@ -17,7 +18,11 @@ type TileProps = {
 const Tile: React.FC<TileProps> = ({tile}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.tileTitle}>{tile.title}</Text>
+      <View>
+        {tile.icon && <View style={styles.tileIcon}>{tile.icon}</View>}
+        <Text style={styles.tileTitle}>{tile.title}</Text>
+      </View>
+
       {tile.component ? (
         tile.component
       ) : (
