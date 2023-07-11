@@ -21,7 +21,7 @@ type HomeScreenProps = {};
 const HomeScreen: React.FC<HomeScreenProps> = () => {
   const dispatch = useDispatch();
   const forecast = useSelector((state: RootState) => state.forecast);
-  const {selectedCity, isLoading} = useSelector(
+  const {selectedCity, isLoading, permissionsGranted} = useSelector(
     (state: RootState) => state.location,
   );
 
@@ -33,7 +33,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   }, [isLoading, selectedCity]);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[styles.container, {paddingTop: permissionsGranted ? 190 : 220}]}>
       {!isLoading ? (
         <ErrorHandlerUI>
           <ScrollView
@@ -69,6 +70,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.GREY,
-    paddingTop: 300,
   },
 });

@@ -20,7 +20,11 @@ const ForecastScreen: React.FC<ForecastScreenProps> = () => {
   const forecast = useSelector((state: RootState) => state.forecast);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        {paddingTop: location.permissionsGranted ? 190 : 220},
+      ]}>
       {!(location.isLoading || forecast.isLoading) ? (
         <ErrorHandlerUI>
           <ScrollView
@@ -52,6 +56,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.GREY,
-    paddingTop: 300,
   },
 });

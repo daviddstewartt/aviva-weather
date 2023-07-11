@@ -62,7 +62,7 @@ const SelectedCityForecastHeader: React.FC<SelectedCityForecastHeaderProps> = ({
                 <Text style={styles.text}>Loading...</Text>
               </View>
             )}
-            {permissionsGranted && (
+            {!permissionsGranted && (
               <View style={styles.locationPermissionContainer}>
                 <View style={styles.dot} />
                 <Text style={styles.locationPermissionText}>
