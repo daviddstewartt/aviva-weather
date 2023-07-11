@@ -75,19 +75,24 @@ const SavedCityCard: React.FC<ItemProps> = ({
         end={{x: 0, y: 1}}
         style={styles.cardGradientContainer}>
         <View style={styles.cityMainInfo}>
-          <WeatherIcon icon={city.weather.weather[0].icon} size={50} />
+          <WeatherIcon
+            icon={city.weather.weather[0].icon}
+            color={Colors.PURPLE_SECONDARY}
+          />
           <Text style={styles.cityTitle}>{city.name}</Text>
-          <Text style={styles.cityTemp}>{city.weather.main.temp}°</Text>
+          <Text style={styles.cityTemp}>
+            {parseInt(city.weather.main.temp.toString(), 10)}°
+          </Text>
           <View style={{flexDirection: 'column', alignItems: 'center'}}>
             <Text style={styles.cardCityDescription}>
               {city.weather.weather[0].description}
             </Text>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text style={styles.hiLowText}>
-                H: {city.weather.main.temp_max}°
+                H: {parseInt(city.weather.main.temp_max.toString(), 10)}°
               </Text>
               <Text style={styles.hiLowText}>
-                L: {city.weather.main.temp_min}°
+                L: {parseInt(city.weather.main.temp_min.toString(), 10)}°
               </Text>
             </View>
           </View>
@@ -167,8 +172,7 @@ const SavedCityItemHorizontal: React.FC<ItemProps> = ({
       <View style={styles.cityLocationContainer}>
         <WeatherIcon
           icon={city.weather.weather[0].icon}
-          width={50}
-          height={50}
+          color={Colors.PURPLE_SECONDARY}
         />
 
         <View>
@@ -180,13 +184,15 @@ const SavedCityItemHorizontal: React.FC<ItemProps> = ({
       </View>
 
       <View style={styles.cityTempContainer}>
-        <Text style={styles.horizontalCityTemp}>{city.weather.main.temp}°</Text>
+        <Text style={styles.horizontalCityTemp}>
+          {parseInt(city.weather.main.temp.toString(), 10)}°
+        </Text>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={styles.HorizontalHiLoText}>
-            H: {city.weather.main.temp_max}°
+            H: {parseInt(city.weather.main.temp_max.toString(), 10)}°
           </Text>
           <Text style={styles.HorizontalHiLoText}>
-            L: {city.weather.main.temp_min}°
+            L: {parseInt(city.weather.main.temp_min.toString(), 10)}°
           </Text>
         </View>
       </View>

@@ -39,7 +39,12 @@ const HourForcast: React.FC<HourForcastProps> = ({
           {parseInt(forcast.temp.toString(), 10)}°
         </Text>
 
-        <WeatherIcon icon={forcast.weather[0].icon} width={60} height={60} />
+        <WeatherIcon
+          icon={forcast.weather[0].icon}
+          width={60}
+          height={60}
+          color={!active ? Colors.PURPLE_SECONDARY + '70' : Colors.LIGHT}
+        />
         <Text style={styles.forecastTime}>{formatTime(forcast.dt * 1000)}</Text>
       </TouchableOpacity>
     </LinearGradient>

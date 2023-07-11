@@ -21,7 +21,7 @@ const WeatherOverviewPill: React.FC<WeatherOverviewPillProps> = ({
     <View style={[styles.container, style]}>
       <View style={styles.pillItem}>
         <FontAwesome5 name="cloud-rain" size={14} color={Colors.LIGHT} />
-        <Text style={styles.pillText}>{rain}%</Text>
+        <Text style={styles.pillText}>{rain} mm/h</Text>
       </View>
       <View style={styles.pillItem}>
         <FontAwesome5 name="temperature-low" size={14} color={Colors.LIGHT} />

@@ -23,7 +23,7 @@ const HourlyForecast: React.FC<HourlyForecastProps> = ({forecast}) => {
     <Fragment>
       {selectedForecast && (
         <WeatherOverviewPill
-          rain={selectedForecast.rain?.['1h']}
+          rain={selectedForecast.rain?.['1h'] || 0}
           feelsLike={selectedForecast.feels_like}
           wind={selectedForecast.wind_speed}
           style={{marginBottom: Metrics.spacing.l}}
