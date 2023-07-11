@@ -40,19 +40,28 @@ const mainToColourGradient = (
 ): WeatherColourGradient => {
   switch (main) {
     case 'Thunderstorm':
-      return {gradient: ['#2c3e50', '#bdc3c7'], light: true};
+      return {gradient: ['#0e0c32', '#bdc3c7'], light: true};
     case 'Drizzle':
       return {gradient: ['#bdc3c7', '#2c3e50'], light: true};
     case 'Rain':
       return {gradient: ['#bdc3c7', '#2c3e50'], light: true};
     case 'Snow':
-      return {gradient: ['#bdc3c7', '#2c3e50'], light: true};
+      if (night) {
+        return {gradient: ['#182741', '#6f88ab'], light: true};
+      }
+      return {gradient: ['#9ab1c5', '#d9dde2'], light: true};
     case 'Mist':
-      return {gradient: ['#bdc3c7', '#2c3e50'], light: true};
+      if (night) {
+        return {gradient: ['#242f32', '#697476'], light: true};
+      }
+      return {gradient: ['#c0c3ca', '#697476'], light: true};
     case 'Smoke':
       return {gradient: ['#bdc3c7', '#2c3e50'], light: true};
     case 'Haze':
-      return {gradient: ['#bdc3c7', '#2c3e50'], light: true};
+      if (night) {
+        return {gradient: ['#7f4a3d', '#917440'], light: true};
+      }
+      return {gradient: ['#d69923', '#917440'], light: true};
     case 'Dust':
       return {gradient: ['#bdc3c7', '#2c3e50'], light: true};
     case 'Fog':
@@ -66,6 +75,9 @@ const mainToColourGradient = (
     case 'Tornado':
       return {gradient: ['#2c3e50', '#bdc3c7'], light: true};
     case 'Clear':
+      if (night) {
+        return {gradient: ['#061526', '#224775'], light: true};
+      }
       return {gradient: ['#0047a0', '#6d96b6'], light: true};
     case 'Clouds':
       return {gradient: ['#bdc3c7', '#2c3e50'], light: true};
