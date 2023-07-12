@@ -1,9 +1,13 @@
-export interface LocationState {
+export interface LayoutState {
   savedLocationIsListView: boolean;
+  showForecastToggle: boolean;
+  showSavedLocations: boolean;
 }
 
-const initialState: LocationState = {
+const initialState: LayoutState = {
   savedLocationIsListView: true,
+  showForecastToggle: true,
+  showSavedLocations: false,
 };
 
 export default initialState;

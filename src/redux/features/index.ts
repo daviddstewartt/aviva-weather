@@ -5,12 +5,28 @@ import appReducer from './app';
 import locationReducer from './location';
 import layoutReducer from './layout';
 import forecastReducer from './forecast';
-import {persistReducer} from 'redux-persist';
+import {TransformInbound, createTransform, persistReducer} from 'redux-persist';
+
+// on app load, keep certain layout state values, but reset main ones
+const layoutTransform = createTransform(
+  (inboundState: TransformInbound, key) => {
+    return inboundState;
+  },
+  (outboundState, key) => {
+    return {
+      ...outboundState,
+      showForecastToggle: true,
+      showSavedLocations: false,
+    };
+  },
+  {whitelist: ['layout']},
+);
 
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
   whitelist: ['location', 'layout', 'forecast'],
+  transforms: [layoutTransform],
 };
 
 const rootReducer = combineReducers({

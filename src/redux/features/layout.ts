@@ -1,7 +1,6 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 import initialState from '../selectors/layout';
-
 const layoutSlice = createSlice({
   name: 'layout',
   initialState,
@@ -10,9 +9,19 @@ const layoutSlice = createSlice({
     setSavedLocationList: (state, action: PayloadAction<boolean>) => {
       state.savedLocationIsListView = action.payload;
     },
+    setShowSavedLocations: (state, action: PayloadAction<boolean>) => {
+      state.showSavedLocations = action.payload;
+    },
+    setShowForecastToggle: (state, action: PayloadAction<boolean>) => {
+      state.showForecastToggle = action.payload;
+    },
   },
 });
 
-export const {setSavedLocationList} = layoutSlice.actions;
+export const {
+  setSavedLocationList,
+  setShowForecastToggle,
+  setShowSavedLocations,
+} = layoutSlice.actions;
 
 export default layoutSlice.reducer;
