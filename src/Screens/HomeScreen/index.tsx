@@ -15,6 +15,7 @@ import ErrorHandlerUI from '../../Components/ErrorHandlerUI';
 import HourlyForecast from './Components/HourlyForecast';
 import HomeForecastError from './Components/HomeForecastError';
 import CurrentForecastTiles from './Components/CurrentForecastTiles';
+import CurrentWeather from './Components/CurrentWeather';
 
 type HomeScreenProps = {};
 
@@ -47,6 +48,8 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
 
             {!forecast.error && (
               <Fragment>
+                <CurrentWeather />
+
                 {forecast.hourly && (
                   <HourlyForecast forecast={forecast.hourly} />
                 )}
