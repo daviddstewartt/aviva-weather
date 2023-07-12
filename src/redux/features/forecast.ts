@@ -22,6 +22,7 @@ const forecastSlice = createSlice({
       state.daily = action.payload.daily;
       state.alerts = action.payload.alerts;
       state.isLoading = false;
+      state.error = null;
     },
     setIsLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload;

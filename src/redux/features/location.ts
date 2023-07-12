@@ -18,6 +18,7 @@ const locationSlice = createSlice({
     setSelectedCity: (state, action: PayloadAction<ICityWithWeather>) => {
       state.selectedCity = action.payload;
       state.isLoading = false;
+      state.error = null;
     },
     addCityToSaved: (state, action: PayloadAction<ICityWithWeather>) => {
       state.savedCities.push(action.payload);
