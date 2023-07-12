@@ -22,7 +22,7 @@ const getCityForecast = async (
 
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data.message || 'Failed to get cities');
+    throw new Error(error.response?.data.message || 'Failed to get cities forecast');
   }
 };
 
