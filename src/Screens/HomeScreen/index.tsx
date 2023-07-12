@@ -16,6 +16,7 @@ import HourlyForecast from './Components/HourlyForecast';
 import HomeForecastError from './Components/HomeForecastError';
 import CurrentForecastTiles from './Components/CurrentForecastTiles';
 import CurrentWeather from './Components/CurrentWeather';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type HomeScreenProps = {};
 
@@ -34,8 +35,11 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
   }, [isLoading, selectedCity]);
 
   return (
-    <View
-      style={[styles.container, {paddingTop: permissionsGranted ? 190 : 220}]}>
+    <SafeAreaView 
+      style={[
+        styles.container, 
+        {paddingTop: permissionsGranted ? 190 : 220}
+      ]}>
       {!isLoading ? (
         <ErrorHandlerUI>
           <ScrollView
@@ -63,7 +67,7 @@ const HomeScreen: React.FC<HomeScreenProps> = () => {
       ) : (
         <ActivityIndicator size="large" color={Colors.PURPLE_PRIMARY} />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

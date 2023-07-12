@@ -19,6 +19,7 @@ import ForecastScreen from './src/Screens/ForecastScreen';
 import NavigationOverlay from './src/Components/NavigationOverlay';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import LocationPermissionsWrapper from './src/Components/LocationPermissionsWrapper';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
@@ -43,6 +44,7 @@ const App = () => {
       <PersistGate persistor={persistor}>
         <LocationPermissionsWrapper>
           <GestureHandlerRootView style={{flex: 1}}>
+            <SafeAreaProvider>
             <NavigationContainer
               onStateChange={state =>
                 setCurrentRouteName(state?.index === 0 ? 'Home' : 'Forecast')
@@ -53,6 +55,7 @@ const App = () => {
               </Stack.Navigator>
               <NavigationOverlay currentRoute={currentRouteName || 'Home'} />
             </NavigationContainer>
+            </SafeAreaProvider>
           </GestureHandlerRootView>
         </LocationPermissionsWrapper>
       </PersistGate>

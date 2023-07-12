@@ -19,6 +19,7 @@ import SavedCityItem from './SavedCityItem';
 import LinearGradient from 'react-native-linear-gradient';
 import Button from './Button';
 import {FlatList} from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const {width} = Dimensions.get('window');
 
@@ -63,7 +64,7 @@ const SavedLocations: React.FC<SavedLocationsProps> = ({
     savedCities.length > 1 ? !isListView : true;
 
   return (
-    <View
+    <SafeAreaView
       style={{
         position: 'absolute',
         top: 0,
@@ -156,7 +157,7 @@ const SavedLocations: React.FC<SavedLocationsProps> = ({
           ))}
         </View>
       )}
-    </View>
+      </SafeAreaView>
   );
 };
 

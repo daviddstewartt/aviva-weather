@@ -18,10 +18,6 @@ const styles = StyleSheet.create({
   },
   title: {
     flexGrow: 1,
-    borderRightWidth: 1,
-    borderRightColor: Colors.TEXT_LIGHT,
-    paddingRight: Metrics.spacing.m,
-    marginRight: Metrics.spacing.m,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
     textAlign: 'right',
@@ -32,6 +28,10 @@ const styles = StyleSheet.create({
     color: Colors.TEXT_LIGHT,
   },
   titleContainer: {
+    borderRightWidth: 1,
+    borderRightColor: Colors.TEXT_LIGHT,
+    paddingRight: Metrics.spacing.m,
+    marginRight: Metrics.spacing.m,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
   },

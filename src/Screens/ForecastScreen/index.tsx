@@ -12,6 +12,7 @@ import {Colors, Metrics} from '../../theme';
 import ErrorHandlerUI from '../../Components/ErrorHandlerUI';
 import ForecastTimetable from './Components/ForecastTimetable';
 import ForecastError from './Components/ForecastError';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type ForecastScreenProps = {};
 
@@ -20,7 +21,8 @@ const ForecastScreen: React.FC<ForecastScreenProps> = () => {
   const forecast = useSelector((state: RootState) => state.forecast);
 
   return (
-    <View
+    // <View
+    <SafeAreaView
       style={[
         styles.container,
         {paddingTop: location.permissionsGranted ? 190 : 220},
@@ -46,7 +48,8 @@ const ForecastScreen: React.FC<ForecastScreenProps> = () => {
       ) : (
         <ActivityIndicator size="large" color={Colors.PURPLE_PRIMARY} />
       )}
-    </View>
+      </SafeAreaView>
+    // </View>
   );
 };
 

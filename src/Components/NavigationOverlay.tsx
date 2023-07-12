@@ -21,6 +21,7 @@ import SavedLocations from './SavedLocations';
 import SelectedCityForecastHeader from './SelectedCityForecastHeader';
 import BottomNavigationBar from './BottomNavigationBar';
 import LinearGradient from 'react-native-linear-gradient';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type ForecastToggleOverlayProps = {
   currentRoute: string;
@@ -52,7 +53,7 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
         style={styles.gradient}
       />
 
-      <View
+      <SafeAreaView
         style={[
           styles.headerContainer,
           {
@@ -86,7 +87,8 @@ const ForecastToggleOverlay: React.FC<ForecastToggleOverlayProps> = ({
             <Entype name="cross" size={30} color="#fff" />
           </TouchableOpacity>
         )}
-      </View>
+        
+      </SafeAreaView>
 
       {/* Saved Locations Overlay */}
       {showSavedLocations && (
